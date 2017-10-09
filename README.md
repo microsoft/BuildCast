@@ -3,7 +3,7 @@ BuildCast is the demo app shown in Build 2017 Session **Build Amazing Apps with 
 
 ![BuildCast](/images/fluent.png)
 
-Source code will be published here shortly.  For updates follow [@windowsui](http://twitter.com/windowsui "@windowsui on Twitter").
+Source code will be published here on October 10th.  For updates follow [@windowsui](http://twitter.com/windowsui "@windowsui on Twitter").
 
 ![BuildCast](/images/buildcast.png)
 
