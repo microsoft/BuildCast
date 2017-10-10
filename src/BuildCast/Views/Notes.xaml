@@ -1,0 +1,144 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<Page
+    x:Class="BuildCast.Views.Notes"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Windows.UI.Xaml.Controls"
+    xmlns:media="using:Windows.UI.Xaml.Media"
+    xmlns:datamodel="using:BuildCast.DataModel"
+    xmlns:views="using:BuildCast.Views"
+    mc:Ignorable="d" Loaded="Notes_Loaded"
+    xmlns:helpers="using:BuildCast.Helpers"
+    >
+
+    <Page.Resources>
+        <helpers:DeleteEpisodeNoteCommand x:Key="deleteEpisodeNoteCommand"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="{StaticResource PageMargin}">
+        <Grid.Resources>
+            <CollectionViewSource x:Name="groupInfoCVS" IsSourceGrouped="true" Source="{x:Bind ViewModel.Notes, Mode=OneWay}"/>
+            <Thickness x:Key="topPosition">0,37,0,0</Thickness>
+            <Thickness x:Key="commandbarPosition">0,30,0,0</Thickness>
+            <views:NoteDataTemplateSelector 
+                x:Key="theSelector"
+                BookmarkTemplate="{StaticResource bookmarkItemTemplate}"
+                EpisodeTemplate="{StaticResource episodeTemplate}"
+                />
+
+            <DataTemplate x:Key="bookmarkItemTemplate">
+
+                <SwipeControl x:Name="swipeContainer">
+
+                    <SwipeControl.RightItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItem x:Name="swipeDelete" Text="Delete" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}" 
+                                       Background="{ThemeResource SystemAccentColor}" Invoked="SwipeDelete_Invoked">
+                                <SwipeItem.IconSource>
+                                    <SymbolIconSource Symbol="Delete"/>
+                                </SwipeItem.IconSource>
+                            </SwipeItem>
+                        </SwipeItems>
+                    </SwipeControl.RightItems>
+
+                    <Grid Margin="5" Background="{ThemeResource SystemControlTransparentBrush}" Height="44">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Type}" Grid.Column="0" Margin="2"/>
+                        <TextBlock Text="{Binding Time}" Grid.Column="1" Margin="2" Foreground="DarkGray"/>
+                        <TextBlock Text="{Binding NoteText}" Grid.Column="2" TextWrapping="Wrap" Margin="2"/>
+                    </Grid>
+                </SwipeControl>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="episodeTemplate" x:DataType="datamodel:EpisodeWithState">
+                <Grid PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited" Background="{ThemeResource SystemControlTransparentBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Image Grid.Column="0" Width="40" Height="40" >
+                        <Image.Source>
+                            <BitmapImage UriSource="{x:Bind Episode.ItemThumbnail}" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="{x:Bind Episode.Title}" Grid.Column="1"/>
+                    <FontIcon Visibility="{x:Bind Episode.IsDownloaded}" Glyph="&#xE118;" Grid.Column="2" HorizontalAlignment="Center" />
+                    <TextBlock Text="{x:Bind  PlaybackState.GetPercent(Episode)}" FontSize="30" Grid.Column="3"/>
+
+                    <Grid Grid.Column="4">
+                        <AppBarButton Width="30" Height="30" Icon="Delete" VerticalAlignment="Top" IsTabStop="False" Style="{StaticResource hoverAppbutton}"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+                x:Name="title"
+                Grid.Row="0"
+                x:Uid="Bookmarks_Title"
+                Style="{StaticResource PageTitleStyle}" />
+
+        <ListView 
+                x:Name="notesListView"
+                Grid.Row="1"
+                ItemsSource="{Binding Source={StaticResource groupInfoCVS}}"
+            ItemTemplateSelector="{StaticResource theSelector}"
+                ItemClick="NotesListView_Tapped"
+                IsItemClickEnabled="True"
+                SelectionMode="None"
+                >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="ContextFlyout">
+                        <Setter.Value>
+                            <MenuFlyout Opening="MenuFlyout_Opening">
+                                <MenuFlyoutItem Text="Delete" Icon="Delete" Command="{StaticResource deleteEpisodeNoteCommand}" Click="MenuFlyoutItem_Click"/>
+                            </MenuFlyout>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+    </Grid>
+</Page>

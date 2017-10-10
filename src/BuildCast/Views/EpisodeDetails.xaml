@@ -1,0 +1,93 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<Page
+    x:Class="BuildCast.Views.EpisodeDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:localfunc="using:BuildCast.Views"
+    xmlns:helpers="using:BuildCast.Helpers"
+    mc:Ignorable="d"
+    Loaded="EpisodeDetails_Loaded"
+    >
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="415" x:Name="TopBorderRow"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="LightSlateGray" x:Name="TopBorder">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="headerbackground" 
+                   VerticalAlignment="Stretch" 
+                   HorizontalAlignment="Stretch" 
+                   Stretch="Fill"
+                   Grid.ColumnSpan="2" >
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind ViewModel.CurrentEpisode.Feed.ImageUri}" />
+                </Image.Source>
+            </Image>
+            <Rectangle Fill="{StaticResource InApp}" Grid.ColumnSpan="2" />
+
+            <Image x:Name="feedItemImage" Height="300" Margin="25,75,24,40" 
+                   VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" ImageOpened="FeedItemImage_ImageOpened">
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind ViewModel.CurrentEpisode.ItemThumbnail}" />
+                </Image.Source>
+            </Image>
+
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" Margin="0,80,50,0" Height="200" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock x:Name="episodetitle" Foreground="White" FontSize="16" FontWeight="Bold" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" />
+                    <TextBlock x:Name="episodesubtitle" Foreground="White" FontSize="16" Text="{x:Bind Path=ViewModel.CurrentEpisode.Subtitle}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock x:Name="episodepublishdate" Foreground="White" FontSize="16" Text="{x:Bind localfunc:NavigationRoot.ShortDate(ViewModel.CurrentEpisode.PublishDate.Date)}" />
+                    <TextBlock x:Name="episodeduration" Foreground="White" FontSize="16" Text="{x:Bind Path=ViewModel.CurrentEpisode.Duration}" />
+                </StackPanel>
+                <CommandBar Grid.Row="2" Background="Transparent" RequestedTheme="Dark" HorizontalAlignment="Left" OverflowButtonVisibility="Collapsed">
+                    <AppBarButton x:Name="playepisode" Icon="Play" Label="Play" AccessKey="P" Click="{x:Bind ViewModel.PlayCurrentEpisode}" XYFocusRight="{x:Bind downloadepisode}"/>
+                    <AppBarButton x:Name="downloadepisode" Icon="Download" Label="Download" AccessKey="D" Click="{x:Bind ViewModel.DownloadCurrentEpisode}" XYFocusLeft="{x:Bind playepisode}" XYFocusRight="{x:Bind favoriteepisode}" />
+                    <AppBarButton x:Name="favoriteepisode" Icon="OutlineStar" Label="Favorite" AccessKey="F" Click="{x:Bind ViewModel.FavoriteCurrentEpisode}" XYFocusLeft="{x:Bind downloadepisode}" />
+                </CommandBar>
+            </Grid>
+        </Grid>
+
+        <RelativePanel x:Name="ListContent" Grid.Row="1" Margin="{ThemeResource ContentDialogPadding}" HorizontalAlignment="Stretch">
+            <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" Name="lowerepisodetitle" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" />
+            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Name="lowerepisodesubtitle" Text="{x:Bind Path=ViewModel.CurrentEpisode.Subtitle}" RelativePanel.Below="lowerepisodetitle" />
+            <ScrollViewer x:Name="webScroller"
+                          RelativePanel.Below="lowerepisodesubtitle"
+                          RelativePanel.AlignLeftWithPanel="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignBottomWithPanel="True"
+                          VerticalScrollMode="Enabled"
+                          VerticalScrollBarVisibility="Auto" >
+                <WebView x:Name="descriptionweb" 
+                     DefaultBackgroundColor="Transparent" Height="2000" />
+            </ScrollViewer>
+        </RelativePanel>
+    </Grid>
+</Page>

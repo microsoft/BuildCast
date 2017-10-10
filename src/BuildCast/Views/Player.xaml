@@ -1,0 +1,146 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<Page
+    x:Class="BuildCast.Views.Player"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:controls="using:BuildCast.Controls"
+    Loaded="Player_Loaded"
+    >
+    <Page.Resources>
+        <DataTemplate x:Key="RemoteSystemItems">
+            <Grid>
+                <TextBlock Text="{Binding DisplayName}"></TextBlock>
+            </Grid>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+            <ItemsWrapGrid Orientation="Vertical" />
+        </ItemsPanelTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="playerPageGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="200" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="videoplay.(RelativePanel.Below)" Value="commands" />
+                        <Setter Target="videoPlayer.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="videoPlayer.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="videoPlayer.(RelativePanel.Below)" Value="commands" />
+                        <Setter Target="videoPlayer.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="videoPlayer.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid x:Name="contents" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="86"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="170"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!---Player is lower than header in z-order -->
+            <controls:CustomMediaPlayer Grid.Row="1" x:Name="videoPlayer"></controls:CustomMediaPlayer>
+            
+            <Grid x:Name="header" Padding="25,30,6,0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                <Image  VerticalAlignment="Center"
+                           HorizontalAlignment="Left" x:Name="podimage" Width="50" Height="50">
+                </Image>
+                <StackPanel VerticalAlignment="Center" Margin="60,0,240,0" MaxHeight="50">
+                    <TextBlock x:Name="nowplayingtitle" Style="{ThemeResource SubtitleTextBlockStyle}" TextWrapping="WrapWholeWords" Text="{x:Bind _currentEpisode.Title}"></TextBlock>
+                    <TextBlock x:Name="nowplayingsubtitle" Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords" Text="{x:Bind _currentEpisode.Subtitle}"></TextBlock>
+                </StackPanel>
+
+                <CommandBar  
+                    VerticalAlignment="Bottom"
+                         Margin="0,0,0,0"
+                         x:Name="commands" OverflowButtonVisibility="Collapsed" Background="Transparent" 
+                         >
+
+                    <CommandBar.PrimaryCommands>
+                        <AppBarButton AccessKey="B" x:Name="bookmarkbutton" Label="Bookmark" Click="Bookmark_click"
+                                  XYFocusRight="{x:Bind sharebutton}" XYFocusDown="{x:Bind mtc}">
+                            <AppBarButton.Icon>
+                                <FontIcon FontFamily="/Assets/BCastMDL2.ttf#BuildCast MDL2 Assets" Glyph="&#xEDFF;"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton AccessKey="S" x:Name="sharebutton" Label="Ink Note" Click="Share_click"
+                                  XYFocusLeft="{x:Bind bookmarkbutton}" XYFocusDown="{x:Bind mtc}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEE56;" ></FontIcon>
+                        </AppBarButton>
+                    </CommandBar.PrimaryCommands>
+                </CommandBar>
+            </Grid>
+
+            
+
+            <Grid Grid.Row="2" Padding="24,8,24,0" Background="{ThemeResource SystemControlAcrylicElementBrush}" x:Name="playbackcontrolsholder">
+                <controls:CustomMTC 
+                    x:Name="mtc"
+                    RemoteSystems="{x:Bind ViewModel.RemoteSystems}"
+                    RefreshRequested="{x:Bind ViewModel.RefreshRemoteSystems}"
+                    RemoteSystemSelected="Mtc_RemoteSystemSelected"
+                    XYFocusUp="{x:Bind bookmarkbutton}" 
+                    />
+            </Grid>
+
+       
+        </Grid>
+        <ContentDialog x:Name="RemoteControlPopup" HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+        </ContentDialog>
+
+        <ContentDialog x:Name="BookmarkDialog" 
+                       CloseButtonText="Cancel" 
+                       Background="{ThemeResource AppBarBackgroundThemeBrush}"
+                       BorderThickness="0,0,0,0"
+                       PrimaryButtonText="Add bookmark"
+                       PrimaryButtonCommand="{x:Bind AddBookmarkCommand}"
+                       Height="330"
+                       >
+            <ContentDialog.Content>
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"  Text="Save bookmark" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,10"/>
+
+                    <TextBlock Grid.Row="1" Text="Notes" Width="500"/>
+
+                    <TextBox Grid.Row="2"  x:Name="bookmarkContent" TextWrapping="Wrap"></TextBox>
+                </Grid>
+            </ContentDialog.Content>
+        </ContentDialog>
+    </Grid>
+</Page>

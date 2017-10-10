@@ -1,0 +1,69 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<Page
+    x:Class="BuildCast.Views.InkNote"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0">
+        <TextBlock x:Name="header" Style="{ThemeResource TitleTextBlockStyle}" Margin="24,40,0,0">Ink Note</TextBlock>
+
+        <Viewbox Name="myViewbox" RelativePanel.Below="myCommandBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ScrollViewer Name="myScrollViewer"  HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" ZoomMode="Enabled"  HorizontalContentAlignment="Center">
+                <Grid x:Name="directContainer">
+                    <Grid x:Name="myImageContainer">
+                        <Image Name="framergrab"/>
+                        <Viewbox>
+                            <InkCanvas x:Name="inkingCanvas"/>
+                        </Viewbox>
+                        <Canvas x:Name ="xamloverlay" Background="Transparent" IsHitTestVisible="False">
+
+                        </Canvas>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Viewbox>
+
+        <StackPanel Orientation="Horizontal" x:Name="tools" HorizontalAlignment="Right" Margin="0,40,0,0">
+            <InkToolbar TargetInkCanvas="{x:Bind inkingCanvas}" VerticalAlignment="Top" Background="Transparent">
+                <InkToolbar.Resources>
+                    <SolidColorBrush x:Key="InkToolbarButtonBackgroundThemeBrush" Color="Transparent"/>
+                </InkToolbar.Resources>
+            </InkToolbar>
+            <CommandBar ClosedDisplayMode="Compact" DefaultLabelPosition="Right" Background="Transparent">
+                <AppBarSeparator></AppBarSeparator>
+                <AppBarButton x:Name="clearButton" 
+                              Click="ClearButton_Click"  
+                              RightTapped="ClearButton_RightClick"
+                              Label="Clear" LabelPosition="Default">
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Clear"></SymbolIcon>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Name="saveButton" Click="SaveButton_Click" Label="Save" Icon="Save" />
+                <AppBarButton x:Name="deleteButton" Click="DeleteButton_Click" Label="Delete" Icon="Delete" />
+                <AppBarButton x:Name="shareButton" Click="ShareButton_Click" Label="Share">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+
+        </StackPanel>
+    </Grid>
+</Page>

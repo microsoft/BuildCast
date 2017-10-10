@@ -1,0 +1,51 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BuildCast.Controls">
+
+    <Style TargetType="local:Timeline">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Timeline">
+                    <Grid x:Name="trackContainer" Background="Transparent">
+                        <Rectangle HorizontalAlignment="Stretch" Height="1" Fill="#AA303030"></Rectangle>
+                        <Canvas x:Name="trackCanvas" Margin="0" Background="Transparent">
+                            <Border Canvas.Left="0" Canvas.Top="0" >
+                                <Grid x:Name="positionIndicator" Height="45">
+                                    <Rectangle StrokeThickness="0" StrokeLineJoin="Round" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" Fill="{ThemeResource SystemAccentColor}" Width="45" Height="25"  />
+                                    <local:TimeControl Foreground="White" x:Name="timeControl" Width="45" Height="40" ShowAsPercentage="True" Margin="0,0,0,12" HorizontalAlignment="Right" VerticalAlignment="Bottom"></local:TimeControl>
+                                </Grid>
+                            </Border>
+                        </Canvas>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:TimeControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:TimeControl">
+                    <Rectangle x:Name="DrawHolder" Fill="Transparent">
+
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

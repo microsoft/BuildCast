@@ -1,0 +1,204 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<Page
+    x:Class="BuildCast.Views.FeedDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:datamodel="using:BuildCast.DataModel"
+    mc:Ignorable="d"
+    xmlns:localfunc="using:BuildCast.Views"
+    xmlns:helpers="using:BuildCast.Helpers"
+    x:Name="FeedDetailsPage"
+    >
+
+    <Page.Resources>
+        
+
+    </Page.Resources>
+
+    <RelativePanel Style="{StaticResource PageBackground}">
+        <RelativePanel.Resources>
+            
+            <DataTemplate x:Key="itemTemplate" x:DataType="datamodel:Episode">
+
+                <SwipeControl x:Name="swipeContainer">
+                    
+                    <SwipeControl.RightItems>
+                        <SwipeItems Mode="Reveal">
+                            <SwipeItem Text="Download" Foreground="White" Background="DarkGray" Invoked="SwipeItem_Invoked">
+                                <SwipeItem.IconSource>
+                                    <SymbolIconSource Symbol="Download"/>
+                                </SwipeItem.IconSource>
+                            </SwipeItem>
+                            <SwipeItem Text="Favorite" Foreground="White" Background="{ThemeResource SystemAccentColor}" Invoked="FavoriteSwipeItem_Invoked">
+                                <SwipeItem.IconSource>
+                                    <SymbolIconSource Symbol="Favorite"/>
+                                </SwipeItem.IconSource>
+                            </SwipeItem>
+                        </SwipeItems>
+                    </SwipeControl.RightItems>
+                    
+                    <Grid Height="90" x:Name="RootGrid" Margin="12,0,12,0">
+                        <Grid.Resources>
+                            <Thickness x:Key="IconButtonMargin">2,0,0,0</Thickness>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="128" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="itemImage" Width="128" Height="72">
+                            <Image.Source>
+                                <BitmapImage UriSource="{x:Bind ItemThumbnail}" />
+                            </Image.Source>
+                        </Image>
+                        <StackPanel Margin="14,0,0,0" Grid.Column="1" VerticalAlignment="Center" >
+                            <TextBlock FontWeight="Bold" x:Name="itemTitle"  Text="{x:Bind Title}" TextWrapping="Wrap" />
+                            <TextBlock x:Name="itemsubTitle"  Text="{x:Bind Subtitle}" TextWrapping="NoWrap" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="itemspublishdate" Text="{x:Bind localfunc:NavigationRoot.ShortDate(PublishDate.Date)}" TextWrapping="NoWrap" />
+                                <TextBlock x:Name="itemspublishdata" Margin="16,0,0,0" Text="{x:Bind Duration}" TextWrapping="NoWrap" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="SecondaryCommandPanel" Visibility="Collapsed" Orientation="Horizontal" Grid.Column="2">
+                            <StackPanel.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonRevealBackgroundPressed" Color="DarkGray" />
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonRevealBackgroundPressed" Color="DarkGray" />
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </StackPanel.Resources>
+
+                            <!--Download button-->
+                            <Button Width="50" Height="50" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="{StaticResource IconButtonMargin}" CommandParameter="{x:Bind}" ToolTipService.ToolTip="Download" Click="DownloadButton_Click">
+                                <Button.Content>
+                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" >
+                                        <SymbolIcon Symbol="Download" />
+                                    </Viewbox>
+                                </Button.Content>
+                            </Button>
+
+                            <!--Favorite button-->
+                            <!--TODO: Toggle the star between outline and filled?-->
+                            <Button Width="50" Height="50" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="{StaticResource IconButtonMargin}" ToolTipService.ToolTip="Favorite" CommandParameter="{x:Bind}" Click="FavoriteButton_Click" >
+                                <Button.Content>
+                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" >
+                                        <SymbolIcon Symbol="OutlineStar" />
+                                    </Viewbox>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </SwipeControl>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="GriditemTemplate" x:DataType="datamodel:Episode">
+                <Grid Width="200" Height="200" x:Name="RootGrid"    >
+                    <Image>
+                        <Image.Source>
+                            <BitmapImage UriSource="{x:Bind ItemThumbnail}" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="{x:Bind Title}" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Bottom" />
+                </Grid>
+            </DataTemplate>
+            
+        </RelativePanel.Resources>
+
+        <Grid Grid.Row="0" Background="{StaticResource HeaderColor}" x:Name="TopBorder"
+              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+              Padding="24,52,24,24" Height="348"
+              >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Collapsed">
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind ViewModel.CurrentFeed.ImageUri}" />
+                </Image.Source>
+            </Image>
+
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="feedtitle" Grid.Row="0" Style="{ThemeResource SubheaderTextBlockStyle}" Text="{x:Bind Path=ViewModel.CurrentFeed.Title}" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                <TextBlock x:Name="feedauthor" Grid.Row="1" Style="{ThemeResource TitleTextBlockStyle}" Text="{x:Bind Path=ViewModel.CurrentFeed.Author}" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}" />
+                <TextBlock x:Name="feeddetails" Grid.Row="2" Style="{ThemeResource BodyTextBlockStyle}" Margin="0,10,0,0" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}" HorizontalAlignment="Left" FontSize="14" MaxWidth="500" TextWrapping="Wrap" Text="{x:Bind Path=ViewModel.CurrentFeed.Description}" />
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0" >
+                    <Button x:Name="btnrefresh" Content="Fetch the latest content"  Click="RefreshButton_Click" RightTapped="Button_RightTapped" IsRightTapEnabled="True" RequestedTheme="Dark" Style="{StaticResource ButtonRevealStyle}" />
+                    <TextBlock x:Name="RefreshStatusTextBlock" Margin="10,0,0,0" RequestedTheme="Dark" VerticalAlignment="Center" />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+        <TextBlock x:Name="episodesheader" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Medium" Text="Episodes" RelativePanel.Below="TopBorder" Margin="24,16,0,0"/>
+
+        <ListView x:Name="feeditems"
+                  ItemContainerTransitions="{x:Null}"     
+                  ItemTemplate="{StaticResource itemTemplate}"
+                  IsItemClickEnabled="True"
+                  ItemClick="Feeditems_ItemClick"
+                  ChoosingItemContainer="Feeditems_ChoosingItemContainer"
+                  ItemsSource="{x:Bind ViewModel.EpisodeData}"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.Below="episodesheader"
+                  Grid.Row="1" 
+                  Padding="12,7,12,10">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
+
+                    <Setter Property="ContextFlyout">
+                        <Setter.Value>
+                            <MenuFlyout Opening="MenuFlyout_Opening">
+                                <MenuFlyoutItem Text="Play" Icon="Play" Click="PlayMenuFlyoutItem_Click" />
+                                <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                                <MenuFlyoutItem Text="Download" Icon="Download" Click="DownloadFlyoutItem_Click" />
+                                <MenuFlyoutItem Text="Favorite" Icon="OutlineStar" Click="FavoriteFlyoutItem_Click" />
+                                <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                                <MenuFlyoutItem Text="Details" Click="FavoriteFlyoutItem_Click" />
+
+                            </MenuFlyout>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <ProgressBar x:Name="progress"
+                     IsIndeterminate="True"
+                     Visibility="{x:Bind ViewModel.Loading}"
+                     RelativePanel.AlignTopWith="feeditems"
+                     RelativePanel.AlignLeftWithPanel="true"
+                     RelativePanel.AlignRightWithPanel="true" />
+    </RelativePanel>
+
+</Page>
