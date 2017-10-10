@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="BuildCast.Controls.CustomMTC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="30"
+    d:DesignWidth="400"
+    xmlns:custom="using:BuildCast.Controls"
+    Loaded="UserControl_Loaded"
+    Unloaded="UserControl_Unloaded"
+    xmlns:xaml="using:Windows.UI.Xaml"
+    xmlns:rs="using:BuildCast.Services"
+    xmlns:local="using:BuildCast"
+    XYFocusDown="{x:Bind playpause}" >
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
+        </Grid.RowDefinitions>
+        <custom:Timeline 
+                Grid.Row="0"
+                VerticalAlignment="Stretch"
+                DragStop="DoneSrubbing"
+                x:Name="timelinectrl" HorizontalAlignment="Stretch" IsEnabled="True"></custom:Timeline>
+
+        <custom:TimeControl Background="Transparent" Grid.Row="1" HorizontalAlignment="Left" Width="70" Height="40" x:Name="elapsed"></custom:TimeControl>
+        <Grid Grid.Row="1"  BorderThickness="0,2,0,2" >
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" >
+                <Button x:Name="rwnd" Style="{StaticResource transportButton}" Click="Rwnd_click"  XYFocusRight="{x:Bind playpause}" >
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED3C;" ></FontIcon>
+                </Button>
+                <Button x:Name="playpause" Style="{StaticResource transportButton}" Click="Playpause_click" XYFocusLeft="{x:Bind rwnd}" XYFocusRight="{x:Bind ffwd}">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE103;" ></FontIcon>
+                </Button>
+                <Button x:Name="ffwd" Style="{StaticResource transportButton}" Click="Ffwd_click" XYFocusLeft="{x:Bind playpause}" XYFocusRight="{x:Bind sendtodevice}">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED3D;" ></FontIcon>
+                </Button>
+            </StackPanel>
+            <StackPanel  HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button AccessKey="D" x:Name="sendtodevice" XYFocusLeft="{x:Bind ffwd}" XYFocusRight="{x:Bind pip}">
+                    <Button.Resources>
+                        <DataTemplate x:Key="remotesystemtemplate" x:DataType="rs:IRemoteSystemDescription">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Glyph}"/>
+                                <TextBlock Margin="5,0,0,0" Text="{x:Bind Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Button.Resources>
+                    <Button.Style>
+                        <StaticResource ResourceKey="transportSecondaryButton"/>
+                    </Button.Style>
+                    <Button.Flyout>
+                        <Flyout Opened="Flyout_Opened">
+                            <ListView MaxHeight="250" x:Name="deviceList"  IsItemClickEnabled="True" ItemClick="RomeItemClick" ItemTemplate="{StaticResource remotesystemtemplate}" ItemsSource="{x:Bind RemoteSystems, Mode=TwoWay}"/>
+                        </Flyout>
+                    </Button.Flyout>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC16;" />
+                </Button>
+                <Button x:Name="pip" Style="{StaticResource transportSecondaryButton}" Click="Pip_click" XYFocusLeft="{x:Bind sendtodevice}" XYFocusRight="{x:Bind fs}">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A7;" />
+                </Button>
+                <Button x:Name="fs" Style="{StaticResource transportSecondaryButton}" Click="Fs_click" XYFocusLeft="{x:Bind pip}">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1D9;" />
+                </Button>
+            </StackPanel>
+            <ProgressBar x:Name="romeProgress" HorizontalAlignment="Stretch" VerticalAlignment="Top" IsEnabled="False" Visibility="Collapsed">
+            </ProgressBar>
+        </Grid>
+    </Grid>
+</UserControl>

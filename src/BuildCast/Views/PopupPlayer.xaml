@@ -1,0 +1,29 @@
+﻿<!--
+// ******************************************************************
+// Copyright (c) Microsoft. All rights reserved.
+// This code is licensed under the MIT License (MIT).
+// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+// THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+// ******************************************************************
+-->
+
+<Page
+    x:Class="BuildCast.Views.PopupPlayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BuildCast"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="theGrid">
+        <Rectangle x:Name="gl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
+        <Rectangle SizeChanged="PlayerHolder_SizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="playerHolder" Margin="0,0,0,0"></Rectangle>
+        <Button x:Name="btnexit" Click="Btnexit_LeaveCompactMode" VerticalAlignment="Bottom" HorizontalAlignment="Center">Exit</Button>
+    </Grid>
+</Page>
