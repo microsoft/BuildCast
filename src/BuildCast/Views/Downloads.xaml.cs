@@ -29,8 +29,6 @@ namespace BuildCast.Views
         public Downloads()
         {
             this.InitializeComponent();
-
-            ConfigureAnimations();
         }
 
         public void UpdateBindings()
@@ -41,18 +39,6 @@ namespace BuildCast.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             SetupMenuFlyout();
-        }
-
-        private void ConfigureAnimations()
-        {
-            ElementCompositionPreview.SetIsTranslationEnabled(title, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(title,
-                VisualHelpers.CreateAnimationGroup(
-                VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -50f),
-                VisualHelpers.CreateOpacityAnimation(0.5)));
-
-            Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
         }
 
         private async void Downloads_Loaded(object sender, RoutedEventArgs e)

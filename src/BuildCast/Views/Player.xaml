@@ -22,6 +22,8 @@
     xmlns:controls="using:BuildCast.Controls"
     Loaded="Player_Loaded"
     xmlns:toolkit="using:ToolkitPreview"
+    Canvas.ZIndex="1"
+    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
     <Page.Resources>
         <DataTemplate x:Key="RemoteSystemItems">
@@ -70,7 +72,12 @@
             <!---Player is lower than header in z-order -->
             <controls:CustomMediaPlayer Grid.Row="1" x:Name="videoPlayer"></controls:CustomMediaPlayer>
             
-            <Grid x:Name="header" Padding="25,30,6,0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+            <Grid x:Name="header" Padding="25,30,6,0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAcrylicElementBrush}"
+                  toolkit:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}">
+                <toolkit:Implicit.HideAnimations>
+                    <toolkit:OpacityAnimation Duration="0:0:0.8" To="0"></toolkit:OpacityAnimation>
+                </toolkit:Implicit.HideAnimations>
+                
                 <Image  VerticalAlignment="Center"
                            HorizontalAlignment="Left" x:Name="podimage" Width="50" Height="50"
                         toolkit:Connected.ToKey="podimageback"
@@ -106,6 +113,12 @@
             
 
             <Grid Grid.Row="2" Padding="24,8,24,0" Background="{ThemeResource SystemControlAcrylicElementBrush}" x:Name="playbackcontrolsholder">
+                <toolkit:Implicit.ShowAnimations>
+                    <toolkit:TranslationAnimation Duration="0:0:0.55" From="0,100,0" To="0"></toolkit:TranslationAnimation>
+                </toolkit:Implicit.ShowAnimations>
+                <toolkit:Implicit.HideAnimations>
+                    <toolkit:OpacityAnimation Duration="0:0:0.8" To="0"></toolkit:OpacityAnimation>
+                </toolkit:Implicit.HideAnimations>
                 <controls:CustomMTC 
                     x:Name="mtc"
                     RemoteSystems="{x:Bind ViewModel.RemoteSystems}"

@@ -15,9 +15,45 @@
 <Application
     x:Class="BuildCast.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="using:ToolkitPreview">
     <Application.Resources>
         <ResourceDictionary>
+            <toolkit:CAnimationCollection x:Key="LayoutImplicitAnimations">
+                <toolkit:OffsetAnimation Duration="0:0:0.1"></toolkit:OffsetAnimation>
+            </toolkit:CAnimationCollection>
+
+            <toolkit:CAnimationCollection x:Key="DefaultShowAnimations">
+                <toolkit:TranslationAnimation Duration="0:0:0.45" From="0,-450, 0" To="0"></toolkit:TranslationAnimation>
+            </toolkit:CAnimationCollection>
+
+            <toolkit:CAnimationCollection x:Key="DefaultHideAnimations">
+                <toolkit:TranslationAnimation Duration="0:0:0.45" To="0,-30,0"></toolkit:TranslationAnimation>
+            </toolkit:CAnimationCollection>
+
+            <toolkit:CAnimationCollection x:Key="DefaultListShowAnimations">
+                <toolkit:TranslationAnimation Duration="0:0:0.45" Delay="0:0:0.2" From="0,50,0" To="0"></toolkit:TranslationAnimation>
+                <toolkit:OpacityAnimation Duration="0:0:0.8" From="0" To="1">
+                    <toolkit:ScalarKeyFrame Key="0.25" Value="0"></toolkit:ScalarKeyFrame>
+                </toolkit:OpacityAnimation>
+            </toolkit:CAnimationCollection>
+
+            <toolkit:CAnimationCollection x:Key="DefaultListHideAnimations">
+                <toolkit:TranslationAnimation Duration="0:0:0.4" To="0,50,0"></toolkit:TranslationAnimation>
+                <toolkit:OpacityAnimation Duration="0:0:0.4" To="0"></toolkit:OpacityAnimation>
+            </toolkit:CAnimationCollection>
+
+            <toolkit:CAnimationCollection x:Key="DefaultPageHideAnimation">
+                <toolkit:OpacityAnimation Duration="0:0:0.4" To="0"></toolkit:OpacityAnimation>
+            </toolkit:CAnimationCollection>
+
+            <toolkit:CAnimationCollection x:Key="DefaultTitleShowAnimations">
+                <toolkit:TranslationAnimation Duration="0:0:0.45" From="0, -50, 0" To="0"></toolkit:TranslationAnimation>
+                <toolkit:OpacityAnimation Duration="0:0:0.5" From="0" To="1">
+                    <toolkit:ScalarKeyFrame Key="0.25" Value="0"></toolkit:ScalarKeyFrame>
+                </toolkit:OpacityAnimation>
+            </toolkit:CAnimationCollection>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Common.xaml"/>
                 <ResourceDictionary Source="/Styles/Settings.xaml"/>

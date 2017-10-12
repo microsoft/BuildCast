@@ -23,13 +23,17 @@
     xmlns:helpers="using:BuildCast.Helpers"
     mc:Ignorable="d"
     Loaded="EpisodeDetails_Loaded"
+    Canvas.ZIndex="1"
+    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="415" x:Name="TopBorderRow"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="LightSlateGray" x:Name="TopBorder">
+        <Grid Grid.Row="0" Background="LightSlateGray" x:Name="TopBorder" 
+              toolkit:Implicit.ShowAnimations="{StaticResource DefaultShowAnimations}"
+              toolkit:Implicit.HideAnimations="{StaticResource DefaultHideAnimations}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -77,7 +81,9 @@
             </Grid>
         </Grid>
 
-        <RelativePanel x:Name="ListContent" Grid.Row="1" Margin="{ThemeResource ContentDialogPadding}" HorizontalAlignment="Stretch">
+        <RelativePanel x:Name="ListContent" Grid.Row="1" Margin="{ThemeResource ContentDialogPadding}" HorizontalAlignment="Stretch"
+                       toolkit:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
+                       toolkit:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}">
             <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" Name="lowerepisodetitle" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" />
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Name="lowerepisodesubtitle" Text="{x:Bind Path=ViewModel.CurrentEpisode.Subtitle}" RelativePanel.Below="lowerepisodetitle" />
             <ScrollViewer x:Name="webScroller"

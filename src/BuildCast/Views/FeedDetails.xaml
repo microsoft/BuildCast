@@ -24,12 +24,9 @@
     xmlns:helpers="using:BuildCast.Helpers"
     xmlns:toolkit="using:ToolkitPreview"
     x:Name="FeedDetailsPage"
+    Canvas.ZIndex="1"
+    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
-
-    <Page.Resources>
-        
-
-    </Page.Resources>
 
     <RelativePanel Style="{StaticResource PageBackground}">
         <RelativePanel.Resources>
@@ -128,7 +125,10 @@
         <Grid Grid.Row="0" Background="{StaticResource HeaderColor}" x:Name="TopBorder"
               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
               Padding="24,52,24,24" Height="348"
+              toolkit:Implicit.ShowAnimations="{StaticResource DefaultShowAnimations}"
+              toolkit:Implicit.HideAnimations="{StaticResource DefaultHideAnimations}"
               >
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -174,7 +174,9 @@
                   Grid.Row="1" 
                   Padding="12,7,12,10"
                   toolkit:Connected.ListItemFromKey="FeedItemImage"
-                  toolkit:Connected.ListItemElementName="itemImage">
+                  toolkit:Connected.ListItemElementName="itemImage"
+                  toolkit:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+                  toolkit:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

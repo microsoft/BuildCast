@@ -44,7 +44,6 @@ namespace BuildCast.Views
         public Player()
         {
             this.InitializeComponent();
-            ConfigureAnimations();
             Instance = this;
         }
 
@@ -141,29 +140,6 @@ namespace BuildCast.Views
 
         private void HandleIncomingConnectedNavigation(NavigationEventArgs e)
         {
-        }
-
-        private void ConfigureAnimations()
-        {
-            // TODO: collapse all this into a single helper method
-            ElementCompositionPreview.SetIsTranslationEnabled(header, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(header,
-                VisualHelpers.CreateAnimationGroup(
-                VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -50f),
-                VisualHelpers.CreateOpacityAnimation(0.5)
-                ));
-            ElementCompositionPreview.SetImplicitHideAnimation(header, VisualHelpers.CreateOpacityAnimation(0.8, 0));
-
-            ElementCompositionPreview.SetIsTranslationEnabled(playbackcontrolsholder, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(
-                playbackcontrolsholder,
-                VisualHelpers.CreateAnimationGroup(VisualHelpers.CreateVerticalOffsetAnimation(0.55, 100, 0),
-                                                   VisualHelpers.CreateOpacityAnimation(0.8)));
-
-            ElementCompositionPreview.SetImplicitHideAnimation(playbackcontrolsholder, VisualHelpers.CreateOpacityAnimation(0.8, 0));
-
-            Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.8, 0));
         }
 
         // Buttons

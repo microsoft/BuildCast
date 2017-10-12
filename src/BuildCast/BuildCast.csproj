@@ -110,6 +110,9 @@
     <Compile Include="..\..\..\..\XamlCompositionPlayground\App6\Connected.cs">
       <Link>Connected.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\XamlCompositionPlayground\App6\ImplicitAnimations.cs">
+      <Link>ImplicitAnimations.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

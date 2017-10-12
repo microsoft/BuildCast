@@ -37,7 +37,6 @@ namespace BuildCast.Views
         public FeedDetails()
         {
             this.InitializeComponent();
-            ConfigureAnimations();
 
             // Customize sizing for Xbox
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
@@ -67,29 +66,6 @@ namespace BuildCast.Views
             btnrefresh.Focus(FocusState.Programmatic);
 
             Loaded -= FeedDetails_Loaded;
-        }
-
-        private void ConfigureAnimations()
-        {
-            // TODO: collapse all this into a single helper method
-            ElementCompositionPreview.SetIsTranslationEnabled(TopBorder, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(TopBorder, VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -450f));
-            ElementCompositionPreview.SetImplicitHideAnimation(TopBorder, VisualHelpers.CreateVerticalOffsetAnimationTo(0.45, -30));
-
-            // ListContent:
-            var listContentShowAnimations = VisualHelpers.CreateVerticalOffsetAnimation(0.45, 50, 0.2);
-            var listContentOpacityAnimations = VisualHelpers.CreateOpacityAnimation(.8);
-
-            ElementCompositionPreview.SetIsTranslationEnabled(feeditems, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(
-                feeditems,
-                VisualHelpers.CreateAnimationGroup(listContentShowAnimations, listContentOpacityAnimations));
-
-            ElementCompositionPreview.SetImplicitHideAnimation(feeditems, VisualHelpers.CreateVerticalOffsetAnimationTo(0.4, 50));
-
-            // Set Z index to force this page to the top during the hide animation
-            Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

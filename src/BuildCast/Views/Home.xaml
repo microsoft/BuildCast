@@ -21,7 +21,13 @@
     xmlns:datamodel="using:BuildCast.DataModel"
     RequestedTheme="{x:Bind HomeTheme}"
     xmlns:toolkit="using:ToolkitPreview"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
+    Canvas.ZIndex="1">
+
+    <Page.Resources>
+        
+    </Page.Resources>
 
     <Grid Style="{x:Bind HomeBackground}">
         <VisualStateManager.VisualStateGroups>
@@ -71,13 +77,21 @@
                     <BitmapImage UriSource="{x:Bind ParallaxImage}" />
                 </Image.Source>
             </Image>
+            <toolkit:Implicit.ShowAnimations>
+                <toolkit:TranslationAnimation Duration="0:0:0.55" To="0" From="0, -150, 0"></toolkit:TranslationAnimation>
+            </toolkit:Implicit.ShowAnimations>
+            <toolkit:Implicit.HideAnimations>
+                <toolkit:TranslationAnimation Duration="0:0:0.55" To="0, -150, 0"></toolkit:TranslationAnimation>
+                <toolkit:OpacityAnimation Duration="0:0:0.4" To="0"></toolkit:OpacityAnimation>
+            </toolkit:Implicit.HideAnimations>
         </ParallaxView>
 
         <Image x:Name="Logo" 
                VerticalAlignment="Top" 
                Margin="0,30,0,0"
                Grid.Row="0"
-               Width="370">
+               Width="370"
+               toolkit:Implicit.Animations="{StaticResource LayoutImplicitAnimations}">
             <Image.Source>
                 <SvgImageSource UriSource="{x:Bind LogoSource}" />
             </Image.Source>
@@ -86,7 +100,8 @@
         <AutoSuggestBox x:Name="Search" Grid.Row="0" Width="296" PlaceholderText="Search episodes" Margin="0,68,24,0" QueryIcon="Find"
                         TextChanged="AutoSuggestBox_TextChanged"
                         SuggestionChosen="AutoSuggestBox_SuggestionChosen"
-                        RequestedTheme="Light" />
+                        RequestedTheme="Light"
+                        toolkit:Implicit.Animations="{StaticResource LayoutImplicitAnimations}"/>
         <TextBlock Grid.Row="1" VerticalAlignment="Top" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Medium" Margin="24,12,0,0" Text="Recommended" />
 
         <GridView Grid.Row="1" x:Name="HomeFeedGrid" IsItemClickEnabled="True" ItemClick="HomeFeedGrid_ItemClick"

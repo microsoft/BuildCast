@@ -37,9 +37,6 @@ namespace BuildCast.Views
             this.InitializeComponent();
 
             HomeFeedGrid.ItemsSource = FeedStore.AllFeeds;
-
-            ConfigureAnimations();
-
         }
 
         public HomeViewModel ViewModel { get; set; }
@@ -86,31 +83,11 @@ namespace BuildCast.Views
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
-                
             }
             else
             {
                 _persistedItemIndex = -1;
             }
-
-            ConfigureComposition();
-        }
-
-        private void ConfigureComposition()
-        {
-            this.Logo.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
-            this.Search.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
-        }
-
-        private void ConfigureAnimations()
-        {
-            ElementCompositionPreview.SetIsTranslationEnabled(paraimage, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(paraimage, VisualHelpers.CreateVerticalOffsetAnimationFrom(0.55, -150));
-            ElementCompositionPreview.SetImplicitHideAnimation(paraimage, VisualHelpers.CreateVerticalOffsetAnimationTo(0.55, -150));
-            ElementCompositionPreview.SetImplicitHideAnimation(paraimage, VisualHelpers.CreateOpacityAnimation(0.4, 0));
-
-            Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
         }
 
         #region staggering
