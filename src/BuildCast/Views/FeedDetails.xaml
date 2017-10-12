@@ -22,6 +22,7 @@
     mc:Ignorable="d"
     xmlns:localfunc="using:BuildCast.Views"
     xmlns:helpers="using:BuildCast.Helpers"
+    xmlns:toolkit="using:ToolkitPreview"
     x:Name="FeedDetailsPage"
     >
 
@@ -133,13 +134,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Collapsed">
+            <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Visible"
+                   toolkit:Connected.ToKey="podimageback">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind ViewModel.CurrentFeed.ImageUri}" />
                 </Image.Source>
             </Image>
 
-            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Collapsed">
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Visible" toolkit:Connected.AnchorElement="{x:Bind podimage}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -170,7 +172,9 @@
                   RelativePanel.AlignRightWithPanel="True"
                   RelativePanel.Below="episodesheader"
                   Grid.Row="1" 
-                  Padding="12,7,12,10">
+                  Padding="12,7,12,10"
+                  toolkit:Connected.ListItemFromKey="FeedItemImage"
+                  toolkit:Connected.ListItemElementName="itemImage">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

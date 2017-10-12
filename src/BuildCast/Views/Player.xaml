@@ -21,6 +21,7 @@
     mc:Ignorable="d"
     xmlns:controls="using:BuildCast.Controls"
     Loaded="Player_Loaded"
+    xmlns:toolkit="using:ToolkitPreview"
     >
     <Page.Resources>
         <DataTemplate x:Key="RemoteSystemItems">
@@ -71,7 +72,10 @@
             
             <Grid x:Name="header" Padding="25,30,6,0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAcrylicElementBrush}">
                 <Image  VerticalAlignment="Center"
-                           HorizontalAlignment="Left" x:Name="podimage" Width="50" Height="50">
+                           HorizontalAlignment="Left" x:Name="podimage" Width="50" Height="50"
+                        toolkit:Connected.ToKey="podimageback"
+                        toolkit:Connected.FromKey="podimage"
+                        >
                 </Image>
                 <StackPanel VerticalAlignment="Center" Margin="60,0,240,0" MaxHeight="50">
                     <TextBlock x:Name="nowplayingtitle" Style="{ThemeResource SubtitleTextBlockStyle}" TextWrapping="WrapWholeWords" Text="{x:Bind _currentEpisode.Title}"></TextBlock>

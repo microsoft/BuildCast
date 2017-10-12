@@ -39,6 +39,7 @@ namespace BuildCast.Views
             HomeFeedGrid.ItemsSource = FeedStore.AllFeeds;
 
             ConfigureAnimations();
+
         }
 
         public HomeViewModel ViewModel { get; set; }
@@ -85,28 +86,7 @@ namespace BuildCast.Views
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
-                if (_persistedItemIndex >= 0)
-                {
-                    HomeFeedGrid.Loaded += async (a, s) =>
-                    {
-                    var item = HomeFeedGrid.Items[_persistedItemIndex];
-                    if (item != null)
-                        {
-                            HomeFeedGrid.ScrollIntoView(item);
-                            var connectedAnimation = ConnectedAnimationService
-                            .GetForCurrentView()
-                            .GetAnimation("podimageback");
-
-                            if (connectedAnimation != null)
-                            {
-                                await HomeFeedGrid.TryStartConnectedAnimationAsync(
-                                    connectedAnimation,
-                                    item,
-                                    "Image");
-                            }
-                        }
-                    };
-                }
+                
             }
             else
             {
@@ -191,7 +171,6 @@ namespace BuildCast.Views
         {
             var selectedFeed = e.ClickedItem as Feed;
             _persistedItemIndex = HomeFeedGrid.Items.IndexOf(e.ClickedItem);
-            HomeFeedGrid.PrepareConnectedAnimation("PodcastImageBorder", e.ClickedItem, "Image");
             ViewModel.NavigateToFeed(selectedFeed);
         }
 

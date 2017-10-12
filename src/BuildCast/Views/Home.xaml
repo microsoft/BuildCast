@@ -20,6 +20,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:datamodel="using:BuildCast.DataModel"
     RequestedTheme="{x:Bind HomeTheme}"
+    xmlns:toolkit="using:ToolkitPreview"
     mc:Ignorable="d">
 
     <Grid Style="{x:Bind HomeBackground}">
@@ -99,6 +100,8 @@
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       VerticalAlignment="Stretch"
                      Margin="0,40,0,0"
+                  toolkit:Connected.ListItemFromKey="podimageback"
+                  toolkit:Connected.ListItemElementName="Image"
                       >
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>

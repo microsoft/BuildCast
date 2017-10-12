@@ -47,7 +47,7 @@ namespace BuildCast.Views
             Bindings.Update();
             descriptionweb.DOMContentLoaded += Descriptionweb_DOMContentLoaded;
             descriptionweb.NavigateToString(ViewModel.CurrentEpisode.Description);
-            feedItemImage.Opacity = 0;
+           // feedItemImage.Opacity = 0;
 
             ViewModel.DownloadError += ViewModel_DownloadError;
         }
@@ -97,13 +97,6 @@ namespace BuildCast.Views
             {
                 ViewModel.DownloadError -= ViewModel_DownloadError;
             }
-
-            // TODO: check if we're going back to player only do reverse then
-            if (e.NavigationMode == NavigationMode.Back && e.SourcePageType == typeof(FeedDetails))
-            {
-                var cas = ConnectedAnimationService.GetForCurrentView();
-                cas.PrepareToAnimate("FeedItemImage", feedItemImage);
-            }
         }
 
         private async void Descriptionweb_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
@@ -123,18 +116,6 @@ namespace BuildCast.Views
 
         private void FeedItemImage_ImageOpened(object sender, RoutedEventArgs e)
         {
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage");
-            if (animation != null)
-            {
-                animation.TryStart(feedItemImage, new[] { DescriptionRoot });
-            }
-
-            feedItemImage.Opacity = 1;
-            animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("feedtitle");
-            if (animation != null)
-            {
-                animation.TryStart(episodetitle);
-            }
         }
     }
 }

@@ -40,14 +40,6 @@ namespace BuildCast.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                if (ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage") != null)
-                {
-                    ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage").Cancel();
-                }
-            }
-
             SetupMenuFlyout();
         }
 

@@ -39,6 +39,9 @@ namespace BuildCast.Views
             var nav = SystemNavigationManager.GetForCurrentView();
 
             nav.BackRequested += Nav_BackRequested;
+
+            ToolkitPreview.Connected.NavigationFrame = AppFrame;
+
         }
 
         public static NavigationRoot Instance

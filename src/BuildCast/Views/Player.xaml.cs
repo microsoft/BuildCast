@@ -141,26 +141,6 @@ namespace BuildCast.Views
 
         private void HandleIncomingConnectedNavigation(NavigationEventArgs e)
         {
-            var cas = ConnectedAnimationService.GetForCurrentView();
-
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                var anim = cas.GetAnimation("podimageback");
-
-                if (anim != null)
-                {
-                    anim.TryStart(podimage);
-                }
-            }
-            else
-            {
-                var anim = cas.GetAnimation("podimage");
-
-                if (anim != null)
-                {
-                    anim.TryStart(podimage);
-                }
-            }
         }
 
         private void ConfigureAnimations()

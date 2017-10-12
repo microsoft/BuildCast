@@ -20,17 +20,6 @@ namespace BuildCast.Helpers
 {
     public static class NavigationAnimationHelpers
     {
-        public static bool ConnectedNavigate(this Frame frame, object parameter, string connectedKey, UIElement element, Type destination)
-        {
-            ImplicitHideFrameContent(frame);
-
-            var cas = ConnectedAnimationService.GetForCurrentView();
-            cas.DefaultDuration = TimeSpan.FromSeconds(0.5);
-            cas.PrepareToAnimate(connectedKey, element);
-
-            return frame.Navigate(destination, parameter);
-        }
-
         public static bool NavigateWithFadeOutgoing(this Frame frame, object parameter, Type destination)
         {
             ImplicitHideFrameContent(frame);

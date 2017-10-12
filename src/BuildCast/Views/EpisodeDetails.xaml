@@ -19,6 +19,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:localfunc="using:BuildCast.Views"
+    xmlns:toolkit="using:ToolkitPreview"
     xmlns:helpers="using:BuildCast.Helpers"
     mc:Ignorable="d"
     Loaded="EpisodeDetails_Loaded"
@@ -47,20 +48,21 @@
 
             <Image x:Name="feedItemImage" Height="300" Margin="25,75,24,40" 
                    VerticalAlignment="Top" 
-                   HorizontalAlignment="Left" ImageOpened="FeedItemImage_ImageOpened">
+                   HorizontalAlignment="Left" ImageOpened="FeedItemImage_ImageOpened"
+                   toolkit:Connected.ToKey="FeedItemImage">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind ViewModel.CurrentEpisode.ItemThumbnail}" />
                 </Image.Source>
             </Image>
 
-            <Grid x:Name="DescriptionRoot" Grid.Column="1" Margin="0,80,50,0" Height="200" VerticalAlignment="Top">
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" Margin="0,80,50,0" Height="200" VerticalAlignment="Top" toolkit:Connected.AnchorElement="{x:Bind feedItemImage}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
-                    <TextBlock x:Name="episodetitle" Foreground="White" FontSize="16" FontWeight="Bold" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" />
+                    <TextBlock x:Name="episodetitle" Foreground="White" FontSize="16" FontWeight="Bold" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" toolkit:Connected.ToKey="feedtitle" />
                     <TextBlock x:Name="episodesubtitle" Foreground="White" FontSize="16" Text="{x:Bind Path=ViewModel.CurrentEpisode.Subtitle}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1">

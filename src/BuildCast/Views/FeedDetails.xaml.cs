@@ -66,22 +66,6 @@ namespace BuildCast.Views
         {
             btnrefresh.Focus(FocusState.Programmatic);
 
-            var connectedAnimation = ConnectedAnimationService
-                  .GetForCurrentView()
-                  .GetAnimation("FeedItemImage");
-
-            if (connectedAnimation != null)
-            {
-                // Although this should already be on the UI thread, re-dispatching it to the UI thread solves an unknown timing issue.
-                var delayTask = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    var ignored = feeditems.TryStartConnectedAnimationAsync(
-                        connectedAnimation,
-                        ViewModel.PersistedEpisode,
-                        "itemImage");
-                });
-            }
-
             Loaded -= FeedDetails_Loaded;
         }
 
@@ -111,13 +95,6 @@ namespace BuildCast.Views
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
-
-            // TODO: check if we're going back to player only do reverse then
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                var cas = ConnectedAnimationService.GetForCurrentView();
-                cas.PrepareToAnimate("podimageback", podimage);
-            }
         }
 
         private void Feeditems_ChoosingItemContainer(ListViewBase sender, ChoosingItemContainerEventArgs args)
@@ -267,14 +244,7 @@ namespace BuildCast.Views
         {
             Episode detailsItem = e.ClickedItem as Episode;
 
-            StartConnectedItemImage(detailsItem);
-
             ViewModel.GoToEpisodeDetails(detailsItem);
-        }
-
-        private void StartConnectedItemImage(Episode item)
-        {
-            var animation = feeditems.PrepareConnectedAnimation("FeedItemImage", item, "itemImage");
         }
 
         private void PlayMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -350,13 +320,7 @@ namespace BuildCast.Views
 
         private void Podimage_ImageOpened(object sender, RoutedEventArgs e)
         {
-            podimage.Visibility = Visibility.Visible;
-            DescriptionRoot.Visibility = Visibility.Visible;
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("PodcastImageBorder");
-            if (animation != null)
-            {
-                animation.TryStart(podimage, new[] { DescriptionRoot });
-            }
+
         }
     }
 }
