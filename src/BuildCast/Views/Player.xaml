@@ -80,8 +80,7 @@
                 
                 <Image  VerticalAlignment="Center"
                            HorizontalAlignment="Left" x:Name="podimage" Width="50" Height="50"
-                        toolkit:Connected.ToKey="podimageback"
-                        toolkit:Connected.FromKey="podimage"
+                        toolkit:Connected.Key="podimage"
                         >
                 </Image>
                 <StackPanel VerticalAlignment="Center" Margin="60,0,240,0" MaxHeight="50">

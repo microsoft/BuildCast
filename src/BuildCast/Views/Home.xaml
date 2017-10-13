@@ -115,7 +115,7 @@
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       VerticalAlignment="Stretch"
                      Margin="0,40,0,0"
-                  toolkit:Connected.ListItemFromKey="podimageback"
+                  toolkit:Connected.ListItemKey="podimageback"
                   toolkit:Connected.ListItemElementName="Image"
                       >
             <GridView.ItemsPanel>

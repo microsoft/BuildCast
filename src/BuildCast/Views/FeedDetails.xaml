@@ -135,7 +135,7 @@
             </Grid.ColumnDefinitions>
 
             <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Visible"
-                   toolkit:Connected.ToKey="podimageback">
+                   toolkit:Connected.Key="podimageback">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind ViewModel.CurrentFeed.ImageUri}" />
                 </Image.Source>
@@ -173,7 +173,7 @@
                   RelativePanel.Below="episodesheader"
                   Grid.Row="1" 
                   Padding="12,7,12,10"
-                  toolkit:Connected.ListItemFromKey="FeedItemImage"
+                  toolkit:Connected.ListItemKey="FeedItemImage"
                   toolkit:Connected.ListItemElementName="itemImage"
                   toolkit:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
                   toolkit:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
