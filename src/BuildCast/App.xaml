@@ -24,7 +24,7 @@
             </toolkit:CAnimationCollection>
 
             <toolkit:CAnimationCollection x:Key="DefaultShowAnimations">
-                <toolkit:TranslationAnimation Duration="0:0:0.45" From="0,-450, 0" To="0"></toolkit:TranslationAnimation>
+                <toolkit:TranslationAnimation Duration="0:0:0.35" From="0,-450, 0" To="0"></toolkit:TranslationAnimation>
             </toolkit:CAnimationCollection>
 
             <toolkit:CAnimationCollection x:Key="DefaultHideAnimations">
