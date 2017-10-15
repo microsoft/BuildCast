@@ -49,6 +49,10 @@ The table below shows the platform features used in the application and where ab
 - The MVVM pattern is used for some of the app UX but not all currently (eg it isn't used in the media playback aspects)
 - There are no media transport controls present in the picture-in-picture view currently
 - The downloads page doesn't show an Empty message when there are no downloads present
+- When refreshing a feed with new items, new items are not correctly sorted until navigating away and back to the feed details page
+- The now playing page has issues when resizing the page down to a small size aka this page isn't fully responsive
+- There are issues with the concurrent PiP view: when closing the main view the app won't currently relaunch unless PiP is closed.  Also, when minimizing main view app is suspended and playback stops
+- When navigationview is in thin mode the window title is incorrectly positioned
 - A number of warnings have not been addressed
 - Things that didn't make it from the Build talk:
   - TreeView control: did not ship in the final Fall Creator's update
