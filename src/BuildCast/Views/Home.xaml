@@ -20,9 +20,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:datamodel="using:BuildCast.DataModel"
     RequestedTheme="{x:Bind HomeTheme}"
-    xmlns:toolkit="using:ToolkitPreview"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
-    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     Canvas.ZIndex="1">
 
     <Page.Resources>
@@ -77,13 +77,13 @@
                     <BitmapImage UriSource="{x:Bind ParallaxImage}" />
                 </Image.Source>
             </Image>
-            <toolkit:Implicit.ShowAnimations>
-                <toolkit:TranslationAnimation Duration="0:0:0.55" To="0" From="0, -150, 0"></toolkit:TranslationAnimation>
-            </toolkit:Implicit.ShowAnimations>
-            <toolkit:Implicit.HideAnimations>
-                <toolkit:TranslationAnimation Duration="0:0:0.55" To="0, -150, 0"></toolkit:TranslationAnimation>
-                <toolkit:OpacityAnimation Duration="0:0:0.4" To="0"></toolkit:OpacityAnimation>
-            </toolkit:Implicit.HideAnimations>
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.55" To="0" From="0, -150, 0"></animations:TranslationAnimation>
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.55" To="0, -150, 0"></animations:TranslationAnimation>
+                <animations:OpacityAnimation Duration="0:0:0.4" To="0"></animations:OpacityAnimation>
+            </animations:Implicit.HideAnimations>
         </ParallaxView>
 
         <Image x:Name="Logo" 
@@ -91,7 +91,7 @@
                Margin="0,30,0,0"
                Grid.Row="0"
                Width="370"
-               toolkit:Implicit.Animations="{StaticResource LayoutImplicitAnimations}">
+               animations:Implicit.Animations="{StaticResource LayoutImplicitAnimations}">
             <Image.Source>
                 <SvgImageSource UriSource="{x:Bind LogoSource}" />
             </Image.Source>
@@ -101,7 +101,7 @@
                         TextChanged="AutoSuggestBox_TextChanged"
                         SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                         RequestedTheme="Light"
-                        toolkit:Implicit.Animations="{StaticResource LayoutImplicitAnimations}"/>
+                        animations:Implicit.Animations="{StaticResource LayoutImplicitAnimations}"/>
         <TextBlock Grid.Row="1" VerticalAlignment="Top" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Medium" Margin="24,12,0,0" Text="Recommended" />
 
         <GridView Grid.Row="1" x:Name="HomeFeedGrid" IsItemClickEnabled="True" ItemClick="HomeFeedGrid_ItemClick"
@@ -115,8 +115,8 @@
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       VerticalAlignment="Stretch"
                      Margin="0,40,0,0"
-                  toolkit:Connected.ListItemKey="podimageback"
-                  toolkit:Connected.ListItemElementName="Image"
+                  animations:Connected.ListItemKey="podimageback"
+                  animations:Connected.ListItemElementName="Image"
                       >
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>

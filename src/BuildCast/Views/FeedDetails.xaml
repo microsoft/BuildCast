@@ -22,10 +22,10 @@
     mc:Ignorable="d"
     xmlns:localfunc="using:BuildCast.Views"
     xmlns:helpers="using:BuildCast.Helpers"
-    xmlns:toolkit="using:ToolkitPreview"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     x:Name="FeedDetailsPage"
     Canvas.ZIndex="1"
-    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
 
     <RelativePanel Style="{StaticResource PageBackground}">
@@ -125,8 +125,8 @@
         <Grid Grid.Row="0" Background="{StaticResource HeaderColor}" x:Name="TopBorder"
               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
               Padding="24,52,24,24" Height="348"
-              toolkit:Implicit.ShowAnimations="{StaticResource DefaultShowAnimations}"
-              toolkit:Implicit.HideAnimations="{StaticResource DefaultHideAnimations}"
+              animations:Implicit.ShowAnimations="{StaticResource DefaultShowAnimations}"
+              animations:Implicit.HideAnimations="{StaticResource DefaultHideAnimations}"
               >
             
             <Grid.ColumnDefinitions>
@@ -135,13 +135,13 @@
             </Grid.ColumnDefinitions>
 
             <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Visible"
-                   toolkit:Connected.Key="podimageback">
+                   animations:Connected.Key="podimageback">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind ViewModel.CurrentFeed.ImageUri}" />
                 </Image.Source>
             </Image>
 
-            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Visible" toolkit:Connected.AnchorElement="{x:Bind podimage}">
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Visible" animations:Connected.AnchorElement="{x:Bind podimage}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -173,10 +173,10 @@
                   RelativePanel.Below="episodesheader"
                   Grid.Row="1" 
                   Padding="12,7,12,10"
-                  toolkit:Connected.ListItemKey="FeedItemImage"
-                  toolkit:Connected.ListItemElementName="itemImage"
-                  toolkit:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
-                  toolkit:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
+                  animations:Connected.ListItemKey="FeedItemImage"
+                  animations:Connected.ListItemElementName="itemImage"
+                  animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+                  animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

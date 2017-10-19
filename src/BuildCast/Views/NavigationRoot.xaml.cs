@@ -22,6 +22,7 @@ namespace BuildCast.Views
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
+    using Microsoft.Toolkit.Uwp.UI.Animations;
 
     public sealed partial class NavigationRoot : Page
     {
@@ -38,7 +39,7 @@ namespace BuildCast.Views
 
             nav.BackRequested += Nav_BackRequested;
 
-            ToolkitPreview.Connected.NavigationFrame = AppFrame;
+            Connected.NavigationFrame = AppFrame;
 
         }
 

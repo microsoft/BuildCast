@@ -24,9 +24,9 @@
     xmlns:views="using:BuildCast.Views"
     mc:Ignorable="d" Loaded="Favorites_Loaded"
     xmlns:helpers="using:BuildCast.Helpers"
-    xmlns:toolkitpreview="using:ToolkitPreview"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     Canvas.ZIndex="1"
-    toolkitpreview:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
     <Page.Resources>
         <helpers:DownloadCommand x:Key="downloadCommand"/>
@@ -96,7 +96,7 @@
                 Grid.Row="0"
                 x:Uid="Favorites_Title"
                 Style="{StaticResource PageTitleStyle}"
-            toolkitpreview:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}"/>
+            animations:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}"/>
 
         <ListView 
                 Grid.Row="1"
@@ -106,8 +106,8 @@
                 ItemClick="FavoriteListView_Tapped"
                 IsItemClickEnabled="True"
                 SelectionMode="None"
-            toolkitpreview:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
-            toolkitpreview:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+            animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
+            animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
                 >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">

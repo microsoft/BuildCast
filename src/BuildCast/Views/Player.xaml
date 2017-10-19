@@ -21,9 +21,9 @@
     mc:Ignorable="d"
     xmlns:controls="using:BuildCast.Controls"
     Loaded="Player_Loaded"
-    xmlns:toolkit="using:ToolkitPreview"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     Canvas.ZIndex="1"
-    toolkit:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
     <Page.Resources>
         <DataTemplate x:Key="RemoteSystemItems">
@@ -73,14 +73,14 @@
             <controls:CustomMediaPlayer Grid.Row="1" x:Name="videoPlayer"></controls:CustomMediaPlayer>
             
             <Grid x:Name="header" Padding="25,30,6,0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAcrylicElementBrush}"
-                  toolkit:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}">
-                <toolkit:Implicit.HideAnimations>
-                    <toolkit:OpacityAnimation Duration="0:0:0.8" To="0"></toolkit:OpacityAnimation>
-                </toolkit:Implicit.HideAnimations>
+                  animations:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}">
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation Duration="0:0:0.8" To="0"></animations:OpacityAnimation>
+                </animations:Implicit.HideAnimations>
                 
                 <Image  VerticalAlignment="Center"
                            HorizontalAlignment="Left" x:Name="podimage" Width="50" Height="50"
-                        toolkit:Connected.Key="podimage"
+                        animations:Connected.Key="podimage"
                         >
                 </Image>
                 <StackPanel VerticalAlignment="Center" Margin="60,0,240,0" MaxHeight="50">
@@ -112,12 +112,12 @@
             
 
             <Grid Grid.Row="2" Padding="24,8,24,0" Background="{ThemeResource SystemControlAcrylicElementBrush}" x:Name="playbackcontrolsholder">
-                <toolkit:Implicit.ShowAnimations>
-                    <toolkit:TranslationAnimation Duration="0:0:0.55" From="0,100,0" To="0"></toolkit:TranslationAnimation>
-                </toolkit:Implicit.ShowAnimations>
-                <toolkit:Implicit.HideAnimations>
-                    <toolkit:OpacityAnimation Duration="0:0:0.8" To="0"></toolkit:OpacityAnimation>
-                </toolkit:Implicit.HideAnimations>
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation Duration="0:0:0.55" From="0,100,0" To="0"></animations:TranslationAnimation>
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation Duration="0:0:0.8" To="0"></animations:OpacityAnimation>
+                </animations:Implicit.HideAnimations>
                 <controls:CustomMTC 
                     x:Name="mtc"
                     RemoteSystems="{x:Bind ViewModel.RemoteSystems}"
