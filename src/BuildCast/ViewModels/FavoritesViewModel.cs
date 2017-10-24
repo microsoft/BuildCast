@@ -38,6 +38,15 @@ namespace BuildCast.ViewModels
             var task = BackgroundDownloadHelper.Download(new System.Uri(episode.Key));
         }
 
+        public async void RemoveDownloadedEpisode(Episode episode)
+        {
+            if (episode != null)
+            {
+                await episode.DeleteDownloaded();
+                await LoadFavorites();
+            }
+        }
+
         public async void RemoveFavoritedEpisode(Episode episode)
         {
             using (var db = new LocalStorageContext())

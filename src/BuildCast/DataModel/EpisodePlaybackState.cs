@@ -36,6 +36,11 @@ namespace BuildCast.DataModel
 
         public double ListenProgress { get; set; }
 
+        public double GetPercentDouble (Episode e)
+        {
+            return (ListenProgress / e.Duration.TotalMilliseconds) * 100;
+        }
+
         public string GetPercent(Episode e)
         {
             return $"{(int)((ListenProgress / e.Duration.TotalMilliseconds) * 100)}%";

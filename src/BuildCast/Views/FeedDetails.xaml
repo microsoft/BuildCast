@@ -26,17 +26,17 @@
     >
 
     <Page.Resources>
-        
-
+        <SolidColorBrush x:Key="ButtonRevealBorderBrushPointerOver" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonRevealBorderBrushPressed" Color="Transparent"/>
     </Page.Resources>
 
     <RelativePanel Style="{StaticResource PageBackground}">
         <RelativePanel.Resources>
-            
+
             <DataTemplate x:Key="itemTemplate" x:DataType="datamodel:Episode">
 
                 <SwipeControl x:Name="swipeContainer">
-                    
+
                     <SwipeControl.RightItems>
                         <SwipeItems Mode="Reveal">
                             <SwipeItem Text="Download" Foreground="White" Background="DarkGray" Invoked="SwipeItem_Invoked">
@@ -51,10 +51,10 @@
                             </SwipeItem>
                         </SwipeItems>
                     </SwipeControl.RightItems>
-                    
+
                     <Grid Height="90" x:Name="RootGrid" Margin="12,0,12,0">
                         <Grid.Resources>
-                            <Thickness x:Key="IconButtonMargin">2,0,0,0</Thickness>
+                            <Thickness x:Key="IconButtonMargin">12,0,0,0</Thickness>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="128" />
@@ -67,11 +67,11 @@
                             </Image.Source>
                         </Image>
                         <StackPanel Margin="14,0,0,0" Grid.Column="1" VerticalAlignment="Center" >
-                            <TextBlock FontWeight="Bold" x:Name="itemTitle"  Text="{x:Bind Title}" TextWrapping="Wrap" />
-                            <TextBlock x:Name="itemsubTitle"  Text="{x:Bind Subtitle}" TextWrapping="NoWrap" />
+                            <TextBlock FontWeight="Bold" x:Name="itemTitle"  Text="{x:Bind Title}" TextWrapping="WrapWholeWords" />
+                            <TextBlock x:Name="itemsubTitle"  Text="{x:Bind Subtitle}" TextWrapping="WrapWholeWords" />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="itemspublishdate" Text="{x:Bind localfunc:NavigationRoot.ShortDate(PublishDate.Date)}" TextWrapping="NoWrap" />
-                                <TextBlock x:Name="itemspublishdata" Margin="16,0,0,0" Text="{x:Bind Duration}" TextWrapping="NoWrap" />
+                                <TextBlock x:Name="dateTextBlock" Text="{x:Bind PublishDate}" Foreground="DarkGray" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalTextAlignment="Left"/>
+                                <TextBlock x:Name="itemspublishdata" Margin="16,0,0,0" Text="{x:Bind Duration}" Foreground="DarkGray" TextWrapping="NoWrap" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="SecondaryCommandPanel" Visibility="Collapsed" Orientation="Horizontal" Grid.Column="2">
@@ -89,9 +89,9 @@
                             </StackPanel.Resources>
 
                             <!--Download button-->
-                            <Button Width="50" Height="50" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="{StaticResource IconButtonMargin}" CommandParameter="{x:Bind}" ToolTipService.ToolTip="Download" Click="DownloadButton_Click">
+                            <Button Width="48" Height="48" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="{StaticResource IconButtonMargin}" CommandParameter="{x:Bind}" ToolTipService.ToolTip="Download" Click="DownloadButton_Click">
                                 <Button.Content>
-                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" >
+                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16" >
                                         <SymbolIcon Symbol="Download" />
                                     </Viewbox>
                                 </Button.Content>
@@ -99,9 +99,9 @@
 
                             <!--Favorite button-->
                             <!--TODO: Toggle the star between outline and filled?-->
-                            <Button Width="50" Height="50" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="{StaticResource IconButtonMargin}" ToolTipService.ToolTip="Favorite" CommandParameter="{x:Bind}" Click="FavoriteButton_Click" >
+                            <Button Width="48" Height="48" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="{StaticResource IconButtonMargin}" ToolTipService.ToolTip="Favorite" CommandParameter="{x:Bind}" Click="FavoriteButton_Click" >
                                 <Button.Content>
-                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" >
+                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16" >
                                         <SymbolIcon Symbol="OutlineStar" />
                                     </Viewbox>
                                 </Button.Content>
@@ -110,7 +110,7 @@
                     </Grid>
                 </SwipeControl>
             </DataTemplate>
-            
+
             <DataTemplate x:Key="GriditemTemplate" x:DataType="datamodel:Episode">
                 <Grid Width="200" Height="200" x:Name="RootGrid"    >
                     <Image>
@@ -121,7 +121,7 @@
                     <TextBlock Text="{x:Bind Title}" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Bottom" />
                 </Grid>
             </DataTemplate>
-            
+
         </RelativePanel.Resources>
 
         <Grid Grid.Row="0" Background="{StaticResource HeaderColor}" x:Name="TopBorder"
@@ -160,7 +160,7 @@
         <TextBlock x:Name="episodesheader" Style="{ThemeResource SubtitleTextBlockStyle}" FontWeight="Medium" Text="Episodes" RelativePanel.Below="TopBorder" Margin="24,16,0,0"/>
 
         <ListView x:Name="feeditems"
-                  ItemContainerTransitions="{x:Null}"     
+                  ItemContainerTransitions="{x:Null}"
                   ItemTemplate="{StaticResource itemTemplate}"
                   IsItemClickEnabled="True"
                   ItemClick="Feeditems_ItemClick"
@@ -169,7 +169,7 @@
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True"
                   RelativePanel.Below="episodesheader"
-                  Grid.Row="1" 
+                  Grid.Row="1"
                   Padding="12,7,12,10">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >

@@ -29,6 +29,7 @@ namespace BuildCast.DataModel
         private string _itemThumbnail;
         private Feed _feed;
         private DateTimeOffset _publishDate;
+        private string _formattedPublishDate;
         private TimeSpan _duration;
 
         /// <summary>
@@ -137,6 +138,12 @@ namespace BuildCast.DataModel
         }
 
         public DateTimeOffset PublishDate { get => _publishDate; set => _publishDate = value; }
+        
+        public string FormatPublishDate (Episode e)
+        {
+            string formattedDate = e.PublishDate.Month.ToString() + "/" + e.PublishDate.Day.ToString() + "/" + e.PublishDate.Year.ToString();
+            return formattedDate;
+        }
 
         public TimeSpan Duration { get => _duration; set => _duration = value; }
 
@@ -167,6 +174,7 @@ namespace BuildCast.DataModel
                     var localFileName = LocalFileName;
                     LocalFileName = null;
                     IsDownloaded = false;
+
                     await BackgroundDownloadHelper.DeleteDownload(localFileName);
                     await lsc.SaveChangesAsync();
                 }
