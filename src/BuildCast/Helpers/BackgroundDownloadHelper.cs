@@ -100,6 +100,12 @@ namespace BuildCast.Helpers
             return await CheckLocalFileExists(hash);
         }
 
+        public static async Task<IReadOnlyList<IStorageItem>> GetAllFiles()
+        {
+            var files = await ApplicationData.Current.LocalCacheFolder.GetItemsAsync();
+            return files;
+        }
+
         public static string SafeHashUri(Uri sourceUri)
         {
             string safeUri = sourceUri.ToString().ToLower();

@@ -57,7 +57,7 @@
                     <Grid Background="{ThemeResource SystemControlTransparentBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*" MinWidth="100"></ColumnDefinition>
                             <ColumnDefinition Width="80"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -122,6 +122,7 @@
                 ItemClick="DownloadListView_Tapped"
                 IsItemClickEnabled="True"
                 SelectionMode="None"
+            Padding="0,0,24,0"
                 >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
