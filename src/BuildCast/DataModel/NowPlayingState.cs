@@ -99,7 +99,7 @@ namespace BuildCast.DataModel
                 return false;
             }
 
-            if (_currentFeed == null || (_currentFeed != null && string.Compare(parameter.Key, _currentEpisode.Key, StringComparison.Ordinal) != 0))
+            if (_currentFeed == null || (_currentFeed != null && string.Compare(parameter.Key, _currentEpisode?.Key, StringComparison.Ordinal) != 0))
             {
                 return true;
             }

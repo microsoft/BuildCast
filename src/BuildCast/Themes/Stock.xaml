@@ -21,6 +21,8 @@
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
     </Style>
 
+    <SolidColorBrush x:Key="MTCScrubberBarTextBrush" Color="#FFFFFFFF" />
+    
     <SolidColorBrush x:Key="HeaderColor" Color="{ThemeResource SystemAccentColor}" />
 
     <media:AcrylicBrush x:Key="bgAcrylicBrushHome"

@@ -47,6 +47,7 @@ namespace BuildCast.Controls
         {
             this.InitializeComponent();
             InitializeComposition();
+            ConfigureAnimations();
 
             // Capture dispatcher from current window on the UI thread
             _dispatcher = Window.Current.Dispatcher;
@@ -133,6 +134,18 @@ namespace BuildCast.Controls
             _videoVisual.Brush = PlayerService.Current.GetBrush(Window.Current.Compositor);
             _container.Children.InsertAtTop(_videoVisual);
             _container.Children.InsertAtTop(_posterVisual);
+        }
+
+        private void ConfigureAnimations()
+        {
+            // TODO: collapse all this into a single helper method
+            ElementCompositionPreview.SetIsTranslationEnabled(HostElement, true);
+            ElementCompositionPreview.SetImplicitShowAnimation(HostElement,
+                VisualHelpers.CreateAnimationGroup(
+                VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -50f),
+                VisualHelpers.CreateOpacityAnimation(0.5)
+                ));
+            ElementCompositionPreview.SetImplicitHideAnimation(HostElement, VisualHelpers.CreateOpacityAnimation(0.8, 0));
         }
 
         private void LoadPlaceholderImage(Uri load)

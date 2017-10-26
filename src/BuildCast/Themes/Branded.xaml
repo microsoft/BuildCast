@@ -24,9 +24,11 @@
     <SolidColorBrush x:Key="ThemeControlForegroundBaseHighBrush" Color="{ThemeResource SystemBaseHighColor}" />
     
     <Color x:Key="BrandColor">#FF046DD7</Color>
-    
-    <!--Override foreground color for this custom theme-->
+
     <SolidColorBrush x:Key="SystemControlForegroundAccentBrush" Color="#FFFFFFFF" />
+
+    <!--Override foreground color for this custom theme-->
+    <SolidColorBrush x:Key="MTCScrubberBarTextBrush" Color="#FF101010" />
     
     <SolidColorBrush x:Key="BrandColorBrush" Color="{StaticResource BrandColor}" />
 

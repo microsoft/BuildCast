@@ -14,6 +14,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using AudioVisualizer;
 using BuildCast.Controls;
 using BuildCast.DataModel;
 using BuildCast.Helpers;
@@ -39,6 +40,7 @@ namespace BuildCast.Services
         private NowPlayingState _nowPlayingState;
 
         private MediaPlayer _mediaPlayer;
+        private AudioVisualizer.PlaybackSource _source;
 
         private string _localFilename;
         private Uri _sourceUri;
@@ -52,13 +54,14 @@ namespace BuildCast.Services
         private MediaPlaybackState _nextEventtoFire;
         private MediaPlaybackState _lastEventFired;
         private StorageFile _currentFile;
-        private PropertySet _referenceProperties;
 
         public event EventHandler<MediaPlaybackState> PlayPauseChanged;
 
         public event EventHandler MediaLoaded;
 
         public event EventHandler MediaLoading;
+
+        public event EventHandler<IVisualizationSource> VisualizationSourceChanged;
 
         public static PlayerService Current
         {
@@ -261,18 +264,7 @@ namespace BuildCast.Services
 
         public NowPlayingState NowPlaying { get => _nowPlayingState; }
 
-        public PropertySet ReferencePropertySet
-        {
-            get
-            {
-                return _referenceProperties;
-            }
-
-            set
-            {
-                _referenceProperties = value;
-            }
-        }
+        public PlaybackSource VisualizationSource { get => _source; set => _source = value; }
         #endregion
 
         private PlayerService()
@@ -301,7 +293,8 @@ namespace BuildCast.Services
         private void InitializeMediaPlayer()
         {
             _mediaPlayer = new MediaPlayer();
-
+            VisualizationSource = new PlaybackSource(_mediaPlayer);
+            VisualizationSource.SourceChanged += _source_SourceChanged;
             _mediaPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
 
             _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
@@ -312,6 +305,11 @@ namespace BuildCast.Services
             {
                 sender.MediaPlayer.SetSurfaceSize(new Size(sender.NaturalVideoWidth, sender.NaturalVideoHeight));
             };
+        }
+
+        private void _source_SourceChanged(object sender, AudioVisualizer.IVisualizationSource args)
+        {
+            VisualizationSourceChanged?.Invoke(sender, args);
         }
 
         private async Task OpenAndPlayNewItem()
