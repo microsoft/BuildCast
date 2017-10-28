@@ -20,7 +20,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:controls="using:BuildCast.Controls"
+    xmlns:a="using:AudioVisualizer"
     Loaded="Player_Loaded"
+    Unloaded="Player_Unloaded"
     >
     <Page.Resources>
         <DataTemplate x:Key="RemoteSystemItems">
@@ -98,9 +100,6 @@
                     </CommandBar.PrimaryCommands>
                 </CommandBar>
             </Grid>
-
-            
-
             <Grid Grid.Row="2" Padding="24,8,24,0" Background="{ThemeResource SystemControlAcrylicElementBrush}" x:Name="playbackcontrolsholder">
                 <controls:CustomMTC 
                     x:Name="mtc"
@@ -110,8 +109,7 @@
                     XYFocusUp="{x:Bind bookmarkbutton}" 
                     />
             </Grid>
-
-       
+            <a:CustomVisualizer Grid.Row="2" x:Name="visualizer" Draw="Visualizer_Draw" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="48" SizeChanged="Visualizer_SizeChanged"></a:CustomVisualizer>
         </Grid>
         <ContentDialog x:Name="RemoteControlPopup" HorizontalAlignment="Center" VerticalAlignment="Center" >
 

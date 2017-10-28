@@ -8,7 +8,7 @@ BuildCast is an end-to-end sample built to showcase the [Microsoft Fluent Design
 
 # Features
 At a high level this sample demonstrates usage of:
-- Fluent design system (Acrylic material, Reveal highlight, Connected animations, ParallaxView etc)
+- Fluent design system (Acrylic material, Reveal highlight, Connected animations, ParallaxView, an Adobe XD UX Prototype etc)
 - XAML controls and features (NavigationView, swipe commanding, context menu with icons and SVG assets, LoadedImageService, conditional XAML etc)
 - Media playback including picture-in-picture and fullscreen views
 - Inking and smart ink
@@ -37,27 +37,22 @@ After opening the Visual Studio solution, set your startup project as **BuildCas
 
 The table below shows the platform features used in the application and where abouts to find them in the sample. 
 
+### Release Notes Update 1 October 2017
+- Add the Adobe XD UX prototype file
+- Add back Spectrum Analyzer visualization to now playing
+- On startup, app will check for cached media changes at filesystem level and update database state to match this
+- Improved commanding on favorites, downloads, notes
+- Design tweaks 
+- Known issues where there will be code changes have all been moved to issues on github
+- Bug fixes
+
 ### Known Issues
-- Only ink strokes are preserved in ink notes, glyphs recognized via smart ink are not currently persisted.
-- In this iteration, BuildCast has been primarily optimized for desktop usage.
-- There may be issues deploying to XBOX due to a platform bug that is being investigated.
-- Duplicate entries may appear in search results.  This is due to the fact that they are listed in multiple RSS feeds.
-- Download progress is only reported via action center, there is no in-app UX for that currently.
-- Download progress reported via toasts / action center will not update when the app quits, even though the download will proceed using background transfer service 
-- Whilst video playback continues when navigating away from the player, there is no in-app picture-in-picture currently hence you'll only hear audio play back.
-- When downloads complete, views will not automatically update to show 
-- The MVVM pattern is used for some of the app UX but not all currently (eg it isn't used in the media playback aspects)
-- There are no media transport controls present in the picture-in-picture view currently
-- The downloads page doesn't show an Empty message when there are no downloads present
-- When refreshing a feed with new items, new items are not correctly sorted until navigating away and back to the feed details page
-- The now playing page has issues when resizing the page down to a small size aka this page isn't fully responsive
-- There are issues with the concurrent PiP view: when closing the main view the app won't currently relaunch unless PiP is closed.  Also, when minimizing main view app is suspended and playback stops
-- When navigationview is in thin mode the window title is incorrectly positioned
+- Download progress reported via toasts / action center will not update when the app quits, even though the download will proceed using background transfer service.  This is due to a known platform gap
+- Deploying / running BuildCast on a XBOX will result in the app crashing due to a platform bug that is being investigated.  [More details here](https://developercommunity.visualstudio.com/content/problem/130393/net-uwp-applications-with-a-targetplatformminversi.html).
 - A number of warnings have not been addressed
 - Things that didn't make it from the Build talk:
   - TreeView control: did not ship in the final Fall Creator's update
   - 360 video playback: this will come in a future update to the app
-  - Spectrum analyzer component: this will come in a future update to the app
 
 ### App details
 ### Frameworks 
@@ -71,6 +66,7 @@ The table below shows the platform features used in the application and where ab
 
 | App feature | Description | Code file |
 | :-------------- | :--------------  | --------------: |
+| [Adobe XD](www.adobe.com/products/xd.html) UX Prototype|   <img src="images/AdobeXDPrototype.PNG" alt="Acrylic material image" width=300> | [BuildCast.xd](design/BuildCast.xd) |
 | [Acrylic material](https://docs.microsoft.com/en-us/windows/uwp/style/acrylic)																						    | Acrylic material usage                          <br>  <img src="images/AcrylicMaterial.png" alt="Acrylic material image" width=300>					| [Branded.xaml](src/BuildCast/Themes/Branded.xaml) |
 | [Reveal highlight](https://docs.microsoft.com/en-us/windows/uwp/style/reveal)																								| Reveal highlight usage                          <br>  <img src="images/RevealHighlight.png" alt="Reveal highlight image" width=300>					| [CustomMTC.xaml](src/BuildCast/Controls/CustomMTC.xaml) |
 | [NavigationView](https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/navigationview)																        | NavigationView usage                            <br>  <img src="images/NavigationView.png" alt="NavigationView image" width=300>						| [NavigationRoot.xaml](src/BuildCast/Views/NavigationRoot.xaml) |
@@ -94,6 +90,7 @@ The table below shows the platform features used in the application and where ab
 |[Composition expression language](https://docs.microsoft.com/en-us/windows/uwp/composition/composition-animation)														    | Timeline animations																															    | [Timeline.cs](src/BuildCast/Controls/Timeline.cs) |
 | [Implicit animations](https://docs.microsoft.com/en-us/windows/uwp/composition/using-the-visual-layer-with-xaml)														    | Poster frame fade out when video starts playing																										| [VisualHelpers.cs](src/BuildCast/Helpers/VisualHelpers.cs) |
 | [Compact overlay mode](https://blogs.msdn.microsoft.com/universal-windows-app-model/2017/02/11/compactoverlay-mode-aka-picture-in-picture/)						        | Picture-in-picture support  <br>  <img src="images/PictureInPicture.png" alt="Virtual surfaces image" width=300>									    | [ViewModeService.cs](src/BuildCast/Services/ViewModeService.cs) |
+| Spectrum Analyzer | Realtime visualization of audio spectra for currently playing clip <br> <img src="images/spectrum.PNG" alt="Full screen mode image" width=300> | [player.xaml.cs](src/BuildCast/Views/Player.xaml.cs) |
 | [Full screen mode](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.ViewManagement.ApplicationView#Methods_)												            | Full screen mode for video		<br>  <img src="images/Fullscreen.PNG" alt="Full screen mode image" width=300>																	                                                | [ViewModeService.cs](src/BuildCast/Services/ViewModeService.cs) |
 | [Share contract](https://docs.microsoft.com/en-us/windows/uwp/app-to-app/share-data)																						| Share the annotated frame                        <br> <img src="images/ShareContract.png" alt="Share contract image" width=300>						| [InkNote.xaml.cs](src/BuildCast/Views/InkNote.xaml.cs) |
 | [Background transfer service](https://docs.microsoft.com/en-us/uwp/api/windows.networking.backgroundtransfer)																| Video download for offline viewing																													| [BackgroundDownloadHelper.cs](src/BuildCast/Helpers/BackgroundDownloadHelper.cs) |

@@ -28,6 +28,9 @@
 
     <Page.Resources>
         <helpers:DeleteEpisodeCommand x:Key="deleteEpisodeCommand"/>
+
+        <SolidColorBrush x:Key="ButtonRevealBorderBrushPointerOver" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonRevealBorderBrushPressed" Color="Transparent"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="{StaticResource PageMargin}">
@@ -54,9 +57,9 @@
                     <Grid Background="{ThemeResource SystemControlTransparentBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*" MinWidth="100"></ColumnDefinition>
                             <ColumnDefinition Width="80"></ColumnDefinition>
-                            <ColumnDefinition Width="80"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
@@ -65,18 +68,35 @@
                                 <BitmapImage UriSource="{x:Bind Episode.ItemThumbnail}" DecodePixelWidth="160" DecodePixelHeight="80"/>
                             </Image.Source>
                         </Image>
+
+                        <Grid x:Name="PlayIcon" Visibility="Collapsed" Grid.Column="0" CornerRadius="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="{ThemeResource SystemControlForegroundChromeBlackMediumLowBrush}">
+                            <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16">
+                                <SymbolIcon Symbol="Play" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                            </Viewbox>
+                        </Grid>
+
+                        <ProgressBar Maximum="100" Grid.Column="0" Width="140" Margin="0, 0, 0, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center" Value="{x:Bind PlaybackState.GetPercentDouble(Episode)}"/>
+
                         <Grid Grid.Column="1" Margin="5">
                             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <TextBlock Text="{x:Bind Episode.Title}" HorizontalTextAlignment="Left"/>
-                                <TextBlock x:Name="dateTextBlock" Text="{x:Bind Episode.PublishDate}" Foreground="DarkGray" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalTextAlignment="Left"/>
+                                <TextBlock Text="{x:Bind Episode.Title}" HorizontalTextAlignment="Left" TextWrapping="WrapWholeWords"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="dateTextBlock" Text="{x:Bind Episode.FormatPublishDate(Episode)}" Foreground="DarkGray" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalTextAlignment="Left"/>
+                                    <TextBlock x:Name="itemspublishdata" Margin="16,0,0,0" Text="{x:Bind Episode.Duration}" Foreground="DarkGray" TextWrapping="NoWrap" />
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <FontIcon Visibility="{x:Bind Episode.IsDownloaded}" Glyph="&#xE118;" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Text="{x:Bind  PlaybackState.GetPercent(Episode)}" FontSize="18" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Visibility="{x:Bind Episode.IsDownloaded}" Text="Episode Downloaded" Margin="12, 0, 0, 0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-                        <!--<Grid Grid.Column="4" Visibility="Collapsed">
-                            <AppBarButton Width="50" Height="50" Icon="Delete" VerticalAlignment="Top" IsTabStop="False" Style="{StaticResource hoverAppbutton}" Click="AppBarButton_Click"/>
-                        </Grid>-->
+                        <Grid x:Name="SecondaryCommandPanel" Grid.Column="4" Width="48" Margin="12, 0, 0, 0">
+                            <Button x:Name="DeleteButton" Visibility="Collapsed" Width="48" FontSize="16" Height="48" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" ToolTipService.ToolTip="Delete">
+                                <Button.Content>
+                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16" >
+                                        <SymbolIcon Symbol="Delete"/>
+                                    </Viewbox>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
                     </Grid>
                 </SwipeControl>
             </DataTemplate>
@@ -98,9 +118,11 @@
                 Grid.Row="1"
                 ItemsSource="{Binding Source={StaticResource groupInfoCVS}}"
                 ItemTemplate="{StaticResource downloadTemplate}"
+                ChoosingItemContainer="DownloadListView_ChoosingItemContainer"
                 ItemClick="DownloadListView_Tapped"
                 IsItemClickEnabled="True"
                 SelectionMode="None"
+            Padding="0,0,24,0"
                 >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">

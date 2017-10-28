@@ -151,7 +151,7 @@ namespace BuildCast.DataModel
                 XAttribute mediadownload;
 
                 var pubDateStr = item.Element("pubDate")?.Value;
-                DateTimeOffset pubDate = DateTime.MinValue;
+                DateTimeOffset pubDate = DateTimeOffset.MinValue;
                 if (!string.IsNullOrEmpty(pubDateStr))
                 {
                     pubDate = DateTimeHelper.ParseDateTimeRFC822(pubDateStr);
