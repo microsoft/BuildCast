@@ -26,8 +26,8 @@
                         <Canvas x:Name="trackCanvas" Margin="0" Background="Transparent">
                             <Border Canvas.Left="0" Canvas.Top="0" >
                                 <Grid x:Name="positionIndicator" Height="45">
-                                    <Rectangle StrokeThickness="0" StrokeLineJoin="Round" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" Fill="{ThemeResource SystemAccentColor}" Width="45" Height="25"  />
-                                    <local:TimeControl Foreground="White" x:Name="timeControl" Width="45" Height="40" ShowAsPercentage="True" Margin="0,0,0,12" HorizontalAlignment="Right" VerticalAlignment="Bottom"></local:TimeControl>
+                                    <Rectangle StrokeThickness="0" StrokeLineJoin="Round" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" Fill="{ThemeResource SystemControlForegroundAccentBrush}" Width="45" Height="25"  />
+                                    <local:TimeControl Foreground="{StaticResource MTCScrubberBarTextBrush}" x:Name="timeControl" Width="45" Height="40" ShowAsPercentage="True" Margin="0,0,0,12" HorizontalAlignment="Right" VerticalAlignment="Bottom"></local:TimeControl>
                                 </Grid>
                             </Border>
                         </Canvas>

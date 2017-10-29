@@ -56,6 +56,8 @@ namespace BuildCast.DataModel
                             }
                         }
                         await db.SaveChangesAsync();
+
+                        await ScanDownloads();
                     }
                 }
                 catch (Exception ex)
@@ -64,6 +66,24 @@ namespace BuildCast.DataModel
                     throw ex;
                 }
             });
+        }
+
+        private static async Task ScanDownloads()
+        {
+            using (var db = new LocalStorageContext())
+            {
+                var items = await BackgroundDownloadHelper.GetAllFiles();
+                foreach (var item in items)
+                {
+                    var found = db.EpisodeCache.Where(e => e.LocalFileName == item.Name).FirstOrDefault();
+                    if (found != null && found.IsDownloaded == false)
+                    {
+                        found.IsDownloaded = true;
+                    }
+                }
+
+                await db.SaveChangesAsync();
+            }
         }
 
         private static void AddFeeds()

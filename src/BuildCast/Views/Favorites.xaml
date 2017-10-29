@@ -1,4 +1,4 @@
-﻿<!--
+﻿    <!--
 // ******************************************************************
 // Copyright (c) Microsoft. All rights reserved.
 // This code is licensed under the MIT License (MIT).
@@ -31,6 +31,11 @@
     <Page.Resources>
         <helpers:DownloadCommand x:Key="downloadCommand"/>
         <helpers:UnfavoriteCommand x:Key="unfavoriteCommand"/>
+
+        <SolidColorBrush x:Key="ButtonRevealBorderBrushPointerOver" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonRevealBorderBrushPressed" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+        <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="Transparent"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="{StaticResource PageMargin}">
@@ -62,10 +67,10 @@
                     <Grid Background="{ThemeResource SystemControlTransparentBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*" MinWidth="100"></ColumnDefinition>
                             <ColumnDefinition Width="80"></ColumnDefinition>
-                            <ColumnDefinition Width="80"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="132"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
                         <Image Grid.Column="0" Width="150" Height="90" Margin="5">
@@ -73,14 +78,68 @@
                                 <BitmapImage UriSource="{x:Bind Episode.ItemThumbnail}" DecodePixelWidth="160" DecodePixelHeight="80"/>
                             </Image.Source>
                         </Image>
+
+                        <Grid x:Name="PlayIcon" Visibility="Collapsed" Grid.Column="0" CornerRadius="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="{ThemeResource SystemControlForegroundChromeBlackMediumLowBrush}">
+                            <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16">
+                                <SymbolIcon Symbol="Play" Foreground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                            </Viewbox>
+                        </Grid>
+
+                        <ProgressBar Maximum="100" Grid.Column="0" Width="140" Margin="0, 0, 0, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center" Value="{x:Bind PlaybackState.GetPercentDouble(Episode)}"/>
+
                         <Grid Grid.Column="1" Margin="5">
                             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <TextBlock Text="{x:Bind Episode.Title}" HorizontalTextAlignment="Left"/>
-                                <TextBlock x:Name="dateTextBlock" Text="{x:Bind Episode.PublishDate}" Foreground="DarkGray" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalTextAlignment="Left"/>
+                                <TextBlock Text="{x:Bind Episode.Title}" TextWrapping="WrapWholeWords" HorizontalTextAlignment="Left"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="dateTextBlock" Text="{x:Bind Episode.FormatPublishDate(Episode)}" Foreground="DarkGray" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalTextAlignment="Left"/>
+                                    <TextBlock x:Name="itemspublishdata" Margin="16,0,0,0" Text="{x:Bind Episode.Duration}" Foreground="DarkGray" TextWrapping="NoWrap" />
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <FontIcon Visibility="{x:Bind Episode.IsDownloaded}" Glyph="&#xE118;" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Text="{x:Bind  PlaybackState.GetPercent(Episode)}" FontSize="18" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Visibility="{x:Bind Episode.IsDownloaded}" Text="Episode Downloaded" Margin="12, 0, 0, 0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <!--<TextBlock Text="{x:Bind  PlaybackState.GetPercent(Episode)}" FontSize="18" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>-->
+
+                        <StackPanel x:Name="SecondaryCommandPanel" Orientation="Horizontal" Grid.Column="4">
+                            <StackPanel.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonRevealBackgroundPressed" Color="DarkGray" />
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonRevealBackgroundPressed" Color="DarkGray" />
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </StackPanel.Resources>
+
+                            <!--Delete button-->
+                            <Grid x:Name="ButtonHolder" Width="48" Height="48" Margin="12, 0, 0, 0">
+                                <Button x:Name="DeleteButton" Click="DeleteButton_Click" Visibility="Collapsed" Width="48" FontSize="16" Height="48" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" ToolTipService.ToolTip="Delete">
+                                    <Button.Content>
+                                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16" >
+                                            <SymbolIcon Symbol="Delete"/>
+                                        </Viewbox>
+                                    </Button.Content>
+                                </Button>
+                                <Button x:Name="DownloadButton" Click="DownloadButton_Click" Visibility="Collapsed" Width="48" FontSize="16" Height="48" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" ToolTipService.ToolTip="Download">
+                                    <Button.Content>
+                                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16" >
+                                            <SymbolIcon Symbol="Download"/>
+                                        </Viewbox>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+
+                            <!--Favorite button-->
+                            <Button x:Name="UnfaveButton" Click="UnfaveButton_Click" Width="48" FontSize="16" Height="48" Style="{StaticResource ButtonRevealStyle}" Background="{ThemeResource AppBarButtonRevealBackground}" Margin="12, 0, 0, 0" ToolTipService.ToolTip="Remove Favorite">
+                                <Button.Content>
+                                    <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16">
+                                        <SymbolIcon x:Name="iconSymbol" Symbol="Favorite"/>
+                                    </Viewbox>
+                                </Button.Content>
+                            </Button>                            
+                        </StackPanel>
                     </Grid>
                 </SwipeControl>
             </DataTemplate>
@@ -103,11 +162,13 @@
                 x:Name="favoriteListView"
                 ItemTemplate="{StaticResource favoriteTemplate}"
                 ItemsSource="{Binding Source={StaticResource groupInfoCVS}}"
+                ChoosingItemContainer="FavoriteListView_ChoosingItemContainer"
                 ItemClick="FavoriteListView_Tapped"
                 IsItemClickEnabled="True"
                 SelectionMode="None"
-            animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
-            animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+                animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
+                animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+                Padding="0,0,24,0"
                 >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
