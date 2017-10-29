@@ -176,17 +176,12 @@
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True"
                   RelativePanel.Below="episodesheader"
-<<<<<<< HEAD
                   Grid.Row="1" 
                   Padding="12,7,12,10"
                   animations:Connected.ListItemKey="FeedItemImage"
                   animations:Connected.ListItemElementName="itemImage"
                   animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
                   animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
-=======
-                  Grid.Row="1"
-                  Padding="12,7,12,10">
->>>>>>> 3434799d757a1f0516ae17d96abec797da448296
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
