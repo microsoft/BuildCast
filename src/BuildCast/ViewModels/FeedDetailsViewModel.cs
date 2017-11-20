@@ -18,6 +18,7 @@ using BuildCast.DataModel;
 using BuildCast.Helpers;
 using BuildCast.Services.Navigation;
 using Windows.UI.Xaml.Navigation;
+using System.Linq;
 
 namespace BuildCast.ViewModels
 {
@@ -75,6 +76,8 @@ namespace BuildCast.ViewModels
         public async Task<int> RefreshData()
         {
             var newEpisodes = await CurrentFeed.GetNewEpisodesAsync();
+            newEpisodes = newEpisodes.OrderBy(e => e.PublishDate).ToList();
+
             foreach (var episode in newEpisodes)
             {
                 EpisodeData.Insert(0, episode);
