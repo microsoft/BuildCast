@@ -47,6 +47,12 @@ namespace BuildCast.Views
             SetupMenuFlyout();
         }
 
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            Canvas.SetZIndex(this, 1);
+        }
+
         private async void Downloads_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.LoadDownloads();

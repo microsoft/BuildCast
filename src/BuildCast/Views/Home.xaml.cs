@@ -90,6 +90,12 @@ namespace BuildCast.Views
             }
         }
 
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            Canvas.SetZIndex(this, 1);
+        }
+
         #region staggering
         private void HomeFeedGrid_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {

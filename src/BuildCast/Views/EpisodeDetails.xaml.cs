@@ -73,6 +73,8 @@ namespace BuildCast.Views
             {
                 ViewModel.DownloadError -= ViewModel_DownloadError;
             }
+
+            Canvas.SetZIndex(this, 1);
         }
 
         private async void Descriptionweb_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)

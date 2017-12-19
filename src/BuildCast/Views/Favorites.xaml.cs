@@ -45,6 +45,12 @@ namespace BuildCast.Views
             //Bindings?.Update();
         }
 
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            Canvas.SetZIndex(this, 1);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             SetupMenuFlyout();

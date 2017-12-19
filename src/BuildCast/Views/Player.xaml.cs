@@ -109,6 +109,7 @@ namespace BuildCast.Views
             var navRoot = ((App)Application.Current).GetNavigationRoot();
 
             navRoot.ExitFullScreen();
+            Canvas.SetZIndex(this, 1);
         }
 
         private void Player_Loaded(object sender, RoutedEventArgs e)

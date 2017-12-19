@@ -71,6 +71,7 @@ namespace BuildCast.Views
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
+            Canvas.SetZIndex(this, 1);
         }
 
         private void Feeditems_ChoosingItemContainer(ListViewBase sender, ChoosingItemContainerEventArgs args)
