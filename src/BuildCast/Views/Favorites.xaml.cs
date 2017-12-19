@@ -34,7 +34,6 @@ namespace BuildCast.Views
         public Favorites()
         {
             this.InitializeComponent();
-            Canvas.SetZIndex(this, 1);
 
             //lstFilter.SelectedItem = 0;
         }
@@ -55,6 +54,7 @@ namespace BuildCast.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             SetupMenuFlyout();
+            Canvas.SetZIndex(this, 0);
         }
 
         private async void Favorites_Loaded(object sender, RoutedEventArgs e)

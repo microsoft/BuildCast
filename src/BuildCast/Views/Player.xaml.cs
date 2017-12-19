@@ -63,7 +63,6 @@ namespace BuildCast.Views
         public Player()
         {
             this.InitializeComponent();
-            Canvas.SetZIndex(this, 1);
             Instance = this;
         }
 
@@ -92,6 +91,7 @@ namespace BuildCast.Views
             base.OnNavigatedTo(e);
             HandleIncomingConnectedNavigation(e);
 
+            Canvas.SetZIndex(this, 0);
             await HandlleIncomingPlaybackRequests(e);
         }
 

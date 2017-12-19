@@ -30,7 +30,6 @@ namespace BuildCast.Views
         public EpisodeDetails()
         {
             this.InitializeComponent();
-            Canvas.SetZIndex(this, 1);
 
             // Custom Image sizing for Xbox
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
@@ -65,6 +64,12 @@ namespace BuildCast.Views
         {
             // Give focus to play button upon page load
             playepisode.Focus(FocusState.Programmatic);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Canvas.SetZIndex(this, 0);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

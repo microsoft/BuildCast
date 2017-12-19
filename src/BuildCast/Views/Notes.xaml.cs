@@ -29,7 +29,6 @@ namespace BuildCast.Views
         public Notes()
         {
             this.InitializeComponent();
-            Canvas.SetZIndex(this, 1);
         }
 
         public void UpdateBindings()
@@ -40,6 +39,13 @@ namespace BuildCast.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             SetupMenuFlyout();
+            Canvas.SetZIndex(this, 0);
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            Canvas.SetZIndex(this, 1);
         }
 
         private async void Notes_Loaded(object sender, RoutedEventArgs e)

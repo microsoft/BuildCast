@@ -35,7 +35,6 @@ namespace BuildCast.Views
         public Downloads()
         {
             this.InitializeComponent();
-            Canvas.SetZIndex(this, 1);
         }
 
         public void UpdateBindings()
@@ -46,6 +45,7 @@ namespace BuildCast.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             SetupMenuFlyout();
+            Canvas.SetZIndex(this, 0);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

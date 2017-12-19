@@ -37,7 +37,6 @@ namespace BuildCast.Views
         public FeedDetails()
         {
             this.InitializeComponent();
-            Canvas.SetZIndex(this, 1);
 
             // Customize sizing for Xbox
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
@@ -67,6 +66,12 @@ namespace BuildCast.Views
             btnrefresh.Focus(FocusState.Programmatic);
 
             Loaded -= FeedDetails_Loaded;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Canvas.SetZIndex(this, 0);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
