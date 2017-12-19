@@ -35,6 +35,7 @@ namespace BuildCast.Views
         public Home()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
 
             HomeFeedGrid.ItemsSource = FeedStore.AllFeeds;
         }

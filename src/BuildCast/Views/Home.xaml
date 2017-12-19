@@ -22,8 +22,7 @@
     RequestedTheme="{x:Bind HomeTheme}"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
-    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
-    Canvas.ZIndex="1">
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}">
 
     <Page.Resources>
         

@@ -23,7 +23,6 @@
     xmlns:helpers="using:BuildCast.Helpers"
     mc:Ignorable="d"
     Loaded="EpisodeDetails_Loaded"
-    Canvas.ZIndex="1"
     animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="root">

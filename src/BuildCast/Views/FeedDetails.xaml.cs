@@ -37,6 +37,7 @@ namespace BuildCast.Views
         public FeedDetails()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
 
             // Customize sizing for Xbox
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")

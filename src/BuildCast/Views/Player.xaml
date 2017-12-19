@@ -23,7 +23,6 @@
     xmlns:a="using:AudioVisualizer"
     Loaded="Player_Loaded"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    Canvas.ZIndex="1"
     animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     Unloaded="Player_Unloaded"
     >
