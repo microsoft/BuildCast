@@ -63,6 +63,7 @@ namespace BuildCast.Views
         public Player()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
             Instance = this;
         }
 

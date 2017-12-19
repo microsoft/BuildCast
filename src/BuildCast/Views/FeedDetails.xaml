@@ -24,7 +24,6 @@
     xmlns:helpers="using:BuildCast.Helpers"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     x:Name="FeedDetailsPage"
-    Canvas.ZIndex="1"
     animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
 

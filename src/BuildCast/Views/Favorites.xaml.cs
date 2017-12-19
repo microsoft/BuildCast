@@ -34,6 +34,7 @@ namespace BuildCast.Views
         public Favorites()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
 
             //lstFilter.SelectedItem = 0;
         }

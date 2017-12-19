@@ -30,6 +30,7 @@ namespace BuildCast.Views
         public EpisodeDetails()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
 
             // Custom Image sizing for Xbox
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")

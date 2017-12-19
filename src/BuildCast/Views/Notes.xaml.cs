@@ -29,6 +29,7 @@ namespace BuildCast.Views
         public Notes()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
         }
 
         public void UpdateBindings()

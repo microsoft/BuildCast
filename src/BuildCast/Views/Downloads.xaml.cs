@@ -35,6 +35,7 @@ namespace BuildCast.Views
         public Downloads()
         {
             this.InitializeComponent();
+            Canvas.SetZIndex(this, 1);
         }
 
         public void UpdateBindings()
