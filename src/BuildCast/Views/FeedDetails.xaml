@@ -22,7 +22,9 @@
     mc:Ignorable="d"
     xmlns:localfunc="using:BuildCast.Views"
     xmlns:helpers="using:BuildCast.Helpers"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     x:Name="FeedDetailsPage"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
 
     <Page.Resources>
@@ -127,19 +129,23 @@
         <Grid Grid.Row="0" Background="{StaticResource HeaderColor}" x:Name="TopBorder"
               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
               Padding="24,52,24,24" Height="348"
+              animations:Implicit.ShowAnimations="{StaticResource DefaultShowAnimations}"
+              animations:Implicit.HideAnimations="{StaticResource DefaultHideAnimations}"
               >
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Collapsed">
+            <Image x:Name="podimage" Width="272" Height="272"  VerticalAlignment="Top" HorizontalAlignment="Left" ImageOpened="Podimage_ImageOpened" Visibility="Visible"
+                   animations:Connected.Key="podimageback">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind ViewModel.CurrentFeed.ImageUri}" />
                 </Image.Source>
             </Image>
 
-            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Collapsed">
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" VerticalAlignment="Stretch" Margin="24,0,0,0" Visibility="Visible" animations:Connected.AnchorElement="{x:Bind podimage}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -169,8 +175,12 @@
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True"
                   RelativePanel.Below="episodesheader"
-                  Grid.Row="1"
-                  Padding="12,7,12,10">
+                  Grid.Row="1" 
+                  Padding="12,7,12,10"
+                  animations:Connected.ListItemKey="FeedItemImage"
+                  animations:Connected.ListItemElementName="itemImage"
+                  animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+                  animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}" >
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

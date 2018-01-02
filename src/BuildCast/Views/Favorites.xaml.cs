@@ -35,8 +35,6 @@ namespace BuildCast.Views
         {
             this.InitializeComponent();
 
-            ConfigureAnimations();
-            
             //lstFilter.SelectedItem = 0;
         }
 
@@ -47,41 +45,16 @@ namespace BuildCast.Views
             //Bindings?.Update();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                if (ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage") != null)
-                {
-                    ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage").Cancel();
-                }
-            }
-
-            SetupMenuFlyout();
+            base.OnNavigatingFrom(e);
+            Canvas.SetZIndex(this, 1);
         }
 
-        private void ConfigureAnimations()
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ElementCompositionPreview.SetIsTranslationEnabled(title, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(title,
-                VisualHelpers.CreateAnimationGroup(
-                VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -50f),
-                VisualHelpers.CreateOpacityAnimation(0.5)
-                ));
-
-            // favorites listview
-            ElementCompositionPreview.SetIsTranslationEnabled(favoriteListView, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(
-                favoriteListView,
-                VisualHelpers.CreateAnimationGroup(
-                    VisualHelpers.CreateVerticalOffsetAnimation(0.55, 50, 0),
-                    VisualHelpers.CreateOpacityAnimation(0.5)));
-
-            ElementCompositionPreview.SetImplicitHideAnimation(favoriteListView, VisualHelpers.CreateVerticalOffsetAnimationTo(0.4, 50));
-            ElementCompositionPreview.SetImplicitHideAnimation(favoriteListView, VisualHelpers.CreateOpacityAnimation(0.4, 0));
-
-            Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
+            SetupMenuFlyout();
+            Canvas.SetZIndex(this, 0);
         }
 
         private async void Favorites_Loaded(object sender, RoutedEventArgs e)

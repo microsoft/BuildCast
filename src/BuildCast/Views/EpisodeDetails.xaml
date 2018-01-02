@@ -19,16 +19,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:localfunc="using:BuildCast.Views"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:helpers="using:BuildCast.Helpers"
     mc:Ignorable="d"
     Loaded="EpisodeDetails_Loaded"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     >
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="415" x:Name="TopBorderRow"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="LightSlateGray" x:Name="TopBorder">
+        <Grid Grid.Row="0" Background="LightSlateGray" x:Name="TopBorder" 
+              animations:Implicit.ShowAnimations="{StaticResource DefaultShowAnimations}"
+              animations:Implicit.HideAnimations="{StaticResource DefaultHideAnimations}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -47,20 +51,21 @@
 
             <Image x:Name="feedItemImage" Height="300" Margin="25,75,24,40" 
                    VerticalAlignment="Top" 
-                   HorizontalAlignment="Left" ImageOpened="FeedItemImage_ImageOpened">
+                   HorizontalAlignment="Left" ImageOpened="FeedItemImage_ImageOpened"
+                   animations:Connected.Key="FeedItemImage">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind ViewModel.CurrentEpisode.ItemThumbnail}" />
                 </Image.Source>
             </Image>
 
-            <Grid x:Name="DescriptionRoot" Grid.Column="1" Margin="0,80,50,0" Height="200" VerticalAlignment="Top">
+            <Grid x:Name="DescriptionRoot" Grid.Column="1" Margin="0,80,50,0" Height="200" VerticalAlignment="Top" animations:Connected.AnchorElement="{x:Bind feedItemImage}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
-                    <TextBlock x:Name="episodetitle" Foreground="White" FontSize="16" FontWeight="Bold" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" />
+                    <TextBlock x:Name="episodetitle" Foreground="White" FontSize="16" FontWeight="Bold" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" animations:Connected.Key="feedtitle" />
                     <TextBlock x:Name="episodesubtitle" Foreground="White" FontSize="16" Text="{x:Bind Path=ViewModel.CurrentEpisode.Subtitle}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1">
@@ -75,7 +80,9 @@
             </Grid>
         </Grid>
 
-        <RelativePanel x:Name="ListContent" Grid.Row="1" Margin="{ThemeResource ContentDialogPadding}" HorizontalAlignment="Stretch">
+        <RelativePanel x:Name="ListContent" Grid.Row="1" Margin="{ThemeResource ContentDialogPadding}" HorizontalAlignment="Stretch"
+                       animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
+                       animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}">
             <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}" Name="lowerepisodetitle" Text="{x:Bind Path=ViewModel.CurrentEpisode.Title}" />
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Name="lowerepisodesubtitle" Text="{x:Bind Path=ViewModel.CurrentEpisode.Subtitle}" RelativePanel.Below="lowerepisodetitle" />
             <ScrollViewer x:Name="webScroller"

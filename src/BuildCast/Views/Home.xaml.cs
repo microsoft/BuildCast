@@ -37,8 +37,6 @@ namespace BuildCast.Views
             this.InitializeComponent();
 
             HomeFeedGrid.ItemsSource = FeedStore.AllFeeds;
-
-            ConfigureAnimations();
         }
 
         public HomeViewModel ViewModel { get; set; }
@@ -85,52 +83,19 @@ namespace BuildCast.Views
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
-                if (_persistedItemIndex >= 0)
-                {
-                    HomeFeedGrid.Loaded += async (a, s) =>
-                    {
-                    var item = HomeFeedGrid.Items[_persistedItemIndex];
-                    if (item != null)
-                        {
-                            HomeFeedGrid.ScrollIntoView(item);
-                            var connectedAnimation = ConnectedAnimationService
-                            .GetForCurrentView()
-                            .GetAnimation("podimageback");
-
-                            if (connectedAnimation != null)
-                            {
-                                await HomeFeedGrid.TryStartConnectedAnimationAsync(
-                                    connectedAnimation,
-                                    item,
-                                    "Image");
-                            }
-                        }
-                    };
-                }
             }
             else
             {
                 _persistedItemIndex = -1;
             }
 
-            ConfigureComposition();
+            Canvas.SetZIndex(this, 0);
         }
 
-        private void ConfigureComposition()
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            this.Logo.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
-            this.Search.EnableLayoutImplicitAnimations(TimeSpan.FromMilliseconds(100));
-        }
-
-        private void ConfigureAnimations()
-        {
-            ElementCompositionPreview.SetIsTranslationEnabled(paraimage, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(paraimage, VisualHelpers.CreateVerticalOffsetAnimationFrom(0.55, -150));
-            ElementCompositionPreview.SetImplicitHideAnimation(paraimage, VisualHelpers.CreateVerticalOffsetAnimationTo(0.55, -150));
-            ElementCompositionPreview.SetImplicitHideAnimation(paraimage, VisualHelpers.CreateOpacityAnimation(0.4, 0));
-
+            base.OnNavigatingFrom(e);
             Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
         }
 
         #region staggering
@@ -191,7 +156,6 @@ namespace BuildCast.Views
         {
             var selectedFeed = e.ClickedItem as Feed;
             _persistedItemIndex = HomeFeedGrid.Items.IndexOf(e.ClickedItem);
-            HomeFeedGrid.PrepareConnectedAnimation("PodcastImageBorder", e.ClickedItem, "Image");
             ViewModel.NavigateToFeed(selectedFeed);
         }
 

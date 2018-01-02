@@ -24,7 +24,8 @@
     xmlns:views="using:BuildCast.Views"
     mc:Ignorable="d" Loaded="Downloads_Loaded"
     xmlns:helpers="using:BuildCast.Helpers"
-    >
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}">
 
     <Page.Resources>
         <helpers:DeleteEpisodeCommand x:Key="deleteEpisodeCommand"/>
@@ -111,8 +112,9 @@
                 x:Name="title"
                 Grid.Row="0"
                 x:Uid="Downloads_Title"
-                Style="{StaticResource PageTitleStyle}" />
-        
+                Style="{StaticResource PageTitleStyle}" 
+            animations:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}"
+            />
         <ListView 
                 x:Name="downloadListView"
                 Grid.Row="1"

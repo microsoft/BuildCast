@@ -24,7 +24,8 @@
     xmlns:views="using:BuildCast.Views"
     mc:Ignorable="d" Loaded="Notes_Loaded"
     xmlns:helpers="using:BuildCast.Helpers"
-    >
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}">
 
     <Page.Resources>
         <helpers:DeleteEpisodeNoteCommand x:Key="deleteEpisodeNoteCommand"/>
@@ -106,7 +107,9 @@
                 x:Name="title"
                 Grid.Row="0"
                 x:Uid="Bookmarks_Title"
-                Style="{StaticResource PageTitleStyle}" />
+                Style="{StaticResource PageTitleStyle}"
+            animations:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}"
+            />
 
         <ListView 
                 x:Name="notesListView"
@@ -116,6 +119,8 @@
                 ItemClick="NotesListView_Tapped"
                 IsItemClickEnabled="True"
                 SelectionMode="None"
+            animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
+            animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
                 >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">

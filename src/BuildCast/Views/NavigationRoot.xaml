@@ -20,6 +20,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:RS3="using:Windows.UI.Xaml.Controls?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
     xmlns:appmodel="using:Windows.ApplicationModel"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:local="using:BuildCast.Views"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
@@ -61,6 +62,6 @@
             <Frame x:Name="appNavFrame" Navigated="AppNavFrame_Navigated">
             </Frame>
         </RS3:NavigationView>
-        <TextBlock x:Name="windowTitle" Style="{ThemeResource CaptionTextBlockStyle}" Visibility="{x:Bind TitleHelper.TitleVisibility, Mode=OneWay}" Margin="{x:Bind TitleHelper.TitlePosition, Mode=OneWay}" VerticalAlignment="Top" Text="{x:Bind appmodel:Package.Current.DisplayName}"></TextBlock>
+        <TextBlock x:Name="windowTitle" Style="{ThemeResource CaptionTextBlockStyle}" Visibility="{x:Bind TitleHelper.TitleVisibility, Mode=OneWay}" Margin="{x:Bind TitleHelper.TitlePosition, Mode=OneWay}" VerticalAlignment="Top" Text="{x:Bind appmodel:Package.Current.DisplayName}" animations:Implicit.Animations="{StaticResource LayoutImplicitAnimations}"></TextBlock>
     </Grid>
 </Page>

@@ -29,8 +29,6 @@ namespace BuildCast.Views
         public Notes()
         {
             this.InitializeComponent();
-
-            ConfigureAnimations();
         }
 
         public void UpdateBindings()
@@ -40,39 +38,14 @@ namespace BuildCast.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                if (ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage") != null)
-                {
-                    ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage").Cancel();
-                }
-            }
-
             SetupMenuFlyout();
+            Canvas.SetZIndex(this, 0);
         }
 
-        private void ConfigureAnimations()
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            ElementCompositionPreview.SetIsTranslationEnabled(title, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(title,
-                VisualHelpers.CreateAnimationGroup(
-                VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -50f),
-                VisualHelpers.CreateOpacityAnimation(0.5)
-                ));
-
-            // favorites listview
-            ElementCompositionPreview.SetIsTranslationEnabled(notesListView, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(
-                notesListView,
-                VisualHelpers.CreateAnimationGroup(
-                    VisualHelpers.CreateVerticalOffsetAnimation(0.55, 50, 0),
-                    VisualHelpers.CreateOpacityAnimation(0.5)));
-
-            ElementCompositionPreview.SetImplicitHideAnimation(notesListView, VisualHelpers.CreateVerticalOffsetAnimationTo(0.4, 50));
-            ElementCompositionPreview.SetImplicitHideAnimation(notesListView, VisualHelpers.CreateOpacityAnimation(0.4, 0));
-
+            base.OnNavigatingFrom(e);
             Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
         }
 
         private async void Notes_Loaded(object sender, RoutedEventArgs e)

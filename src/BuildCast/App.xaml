@@ -15,9 +15,45 @@
 <Application
     x:Class="BuildCast.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations">
     <Application.Resources>
         <ResourceDictionary>
+            <animations:AnimationCollection x:Key="LayoutImplicitAnimations">
+                <animations:OffsetAnimation Duration="0:0:0.1"></animations:OffsetAnimation>
+            </animations:AnimationCollection>
+
+            <animations:AnimationCollection x:Key="DefaultShowAnimations">
+                <animations:TranslationAnimation Duration="0:0:0.35" From="0,-450, 0" To="0"></animations:TranslationAnimation>
+            </animations:AnimationCollection>
+
+            <animations:AnimationCollection x:Key="DefaultHideAnimations">
+                <animations:TranslationAnimation Duration="0:0:0.45" To="0,-30,0"></animations:TranslationAnimation>
+            </animations:AnimationCollection>
+
+            <animations:AnimationCollection x:Key="DefaultListShowAnimations">
+                <animations:TranslationAnimation Duration="0:0:0.45" Delay="0:0:0.2" From="0,50,0" To="0"></animations:TranslationAnimation>
+                <animations:OpacityAnimation Duration="0:0:0.8" From="0" To="1">
+                    <animations:ScalarKeyFrame Key="0.25" Value="0"></animations:ScalarKeyFrame>
+                </animations:OpacityAnimation>
+            </animations:AnimationCollection>
+
+            <animations:AnimationCollection x:Key="DefaultListHideAnimations">
+                <animations:TranslationAnimation Duration="0:0:0.4" To="0,50,0"></animations:TranslationAnimation>
+                <animations:OpacityAnimation Duration="0:0:0.4" To="0"></animations:OpacityAnimation>
+            </animations:AnimationCollection>
+
+            <animations:AnimationCollection x:Key="DefaultPageHideAnimation">
+                <animations:OpacityAnimation Duration="0:0:0.4" To="0"></animations:OpacityAnimation>
+            </animations:AnimationCollection>
+
+            <animations:AnimationCollection x:Key="DefaultTitleShowAnimations">
+                <animations:TranslationAnimation Duration="0:0:0.45" From="0, -50, 0" To="0"></animations:TranslationAnimation>
+                <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1">
+                    <animations:ScalarKeyFrame Key="0.25" Value="0"></animations:ScalarKeyFrame>
+                </animations:OpacityAnimation>
+            </animations:AnimationCollection>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Common.xaml"/>
                 <ResourceDictionary Source="/Styles/Settings.xaml"/>

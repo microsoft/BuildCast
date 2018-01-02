@@ -30,7 +30,6 @@ namespace BuildCast.Views
         public EpisodeDetails()
         {
             this.InitializeComponent();
-            this.ConfigureAnimations();
 
             // Custom Image sizing for Xbox
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
@@ -47,7 +46,7 @@ namespace BuildCast.Views
             Bindings.Update();
             descriptionweb.DOMContentLoaded += Descriptionweb_DOMContentLoaded;
             descriptionweb.NavigateToString(ViewModel.CurrentEpisode.Description);
-            feedItemImage.Opacity = 0;
+           // feedItemImage.Opacity = 0;
 
             ViewModel.DownloadError += ViewModel_DownloadError;
         }
@@ -67,27 +66,10 @@ namespace BuildCast.Views
             playepisode.Focus(FocusState.Programmatic);
         }
 
-        private void ConfigureAnimations()
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: collapse all this into a single helper method
-            ElementCompositionPreview.SetIsTranslationEnabled(TopBorder, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(TopBorder, VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -450f));
-            ElementCompositionPreview.SetImplicitHideAnimation(TopBorder, VisualHelpers.CreateVerticalOffsetAnimationTo(0.45, -30));
-
-            // ListContent:
-            var listContentShowAnimations = VisualHelpers.CreateVerticalOffsetAnimation(0.45, 50, 0.2);
-            var listContentOpacityAnimations = VisualHelpers.CreateOpacityAnimation(.8);
-
-            ElementCompositionPreview.SetIsTranslationEnabled(ListContent, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(
-                ListContent,
-                VisualHelpers.CreateAnimationGroup(listContentShowAnimations, listContentOpacityAnimations));
-
-            ElementCompositionPreview.SetImplicitHideAnimation(ListContent, VisualHelpers.CreateVerticalOffsetAnimationTo(0.4, 50));
-
-            // Set Z index to force this page to the top during the hide animation
-            Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
+            base.OnNavigatedTo(e);
+            Canvas.SetZIndex(this, 0);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -98,12 +80,7 @@ namespace BuildCast.Views
                 ViewModel.DownloadError -= ViewModel_DownloadError;
             }
 
-            // TODO: check if we're going back to player only do reverse then
-            if (e.NavigationMode == NavigationMode.Back && e.SourcePageType == typeof(FeedDetails))
-            {
-                var cas = ConnectedAnimationService.GetForCurrentView();
-                cas.PrepareToAnimate("FeedItemImage", feedItemImage);
-            }
+            Canvas.SetZIndex(this, 1);
         }
 
         private async void Descriptionweb_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
@@ -123,18 +100,6 @@ namespace BuildCast.Views
 
         private void FeedItemImage_ImageOpened(object sender, RoutedEventArgs e)
         {
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage");
-            if (animation != null)
-            {
-                animation.TryStart(feedItemImage, new[] { DescriptionRoot });
-            }
-
-            feedItemImage.Opacity = 1;
-            animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("feedtitle");
-            if (animation != null)
-            {
-                animation.TryStart(episodetitle);
-            }
         }
     }
 }

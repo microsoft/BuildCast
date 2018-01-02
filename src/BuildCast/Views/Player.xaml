@@ -21,6 +21,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loaded="Player_Loaded"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    animations:Implicit.HideAnimations="{StaticResource DefaultPageHideAnimation}"
     Unloaded="Player_Unloaded"
     mc:Ignorable="d">
     <Page.Resources>
@@ -51,7 +53,11 @@
                 Padding="25,30,6,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                Background="{ThemeResource SystemControlAcrylicElementBrush}"
+                animations:Implicit.ShowAnimations="{StaticResource DefaultTitleShowAnimations}">
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation Duration="0:0:0.8" To="0"></animations:OpacityAnimation>
+                </animations:Implicit.HideAnimations>
                 <Image
                     x:Name="podimage"
                     Width="50"
@@ -110,6 +116,12 @@
                 Grid.Row="2"
                 Padding="24,8,24,0"
                 Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation Duration="0:0:0.55" From="0,100,0" To="0"></animations:TranslationAnimation>
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation Duration="0:0:0.8" To="0"></animations:OpacityAnimation>
+                </animations:Implicit.HideAnimations>
                 <controls:CustomMTC
                     x:Name="mtc"
                     RefreshRequested="{x:Bind ViewModel.RefreshRemoteSystems}"

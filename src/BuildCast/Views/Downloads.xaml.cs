@@ -35,8 +35,6 @@ namespace BuildCast.Views
         public Downloads()
         {
             this.InitializeComponent();
-
-            ConfigureAnimations();
         }
 
         public void UpdateBindings()
@@ -46,27 +44,14 @@ namespace BuildCast.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                if (ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage") != null)
-                {
-                    ConnectedAnimationService.GetForCurrentView().GetAnimation("FeedItemImage").Cancel();
-                }
-            }
-
             SetupMenuFlyout();
+            Canvas.SetZIndex(this, 0);
         }
 
-        private void ConfigureAnimations()
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            ElementCompositionPreview.SetIsTranslationEnabled(title, true);
-            ElementCompositionPreview.SetImplicitShowAnimation(title,
-                VisualHelpers.CreateAnimationGroup(
-                VisualHelpers.CreateVerticalOffsetAnimationFrom(0.45, -50f),
-                VisualHelpers.CreateOpacityAnimation(0.5)));
-
+            base.OnNavigatingFrom(e);
             Canvas.SetZIndex(this, 1);
-            ElementCompositionPreview.SetImplicitHideAnimation(this, VisualHelpers.CreateOpacityAnimation(0.4, 0));
         }
 
         private async void Downloads_Loaded(object sender, RoutedEventArgs e)
