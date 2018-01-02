@@ -36,9 +36,9 @@ namespace BuildCast.Views
 {
     public sealed partial class Player : Page, IPageWithViewModel<PlayerViewModel>, IFullscreenPage
     {
-        private ArrayData _emptySpectrum = new ArrayData(2, 20);
-        private ArrayData _previousSpectrum;
-        private ArrayData _previousPeakSpectrum;
+        private SpectrumData _emptySpectrum = SpectrumData.CreateEmpty(2, 20, ScaleType.Linear, ScaleType.Linear, 27, 5500);
+        private SpectrumData _previousSpectrum;
+        private SpectrumData _previousPeakSpectrum;
 
         private TimeSpan _rmsRiseTime = TimeSpan.FromMilliseconds(50);
         private TimeSpan _rmsFallTime = TimeSpan.FromMilliseconds(50);
@@ -47,8 +47,8 @@ namespace BuildCast.Views
         private TimeSpan _frameDuration = TimeSpan.FromMilliseconds(16.7);
 
         private object _sizeLock = new object();
-        private float _visualizerWidth = 0.0f;
-        private float _visualizerHeight = 0.0f;
+        //private float _visualizerWidth = 0.0f;
+        //private float _visualizerHeight = 0.0f;
 
         private CanvasTextFormat _textFormat = new CanvasTextFormat();
 
@@ -345,24 +345,18 @@ namespace BuildCast.Views
         {
             var drawingSession = (CanvasDrawingSession)args.DrawingSession;
 
-            var spectrum = args.Data != null ? args.Data.Spectrum.TransformLinearFrequency(20) : _emptySpectrum;
+            var spectrum = args.Data != null ? args.Data.Spectrum.LogarithmicTransform(20, 27, 5500) : _emptySpectrum;
 
             _previousSpectrum = spectrum.ApplyRiseAndFall(_previousSpectrum, _rmsRiseTime, _rmsFallTime, _frameDuration);
             _previousPeakSpectrum = spectrum.ApplyRiseAndFall(_previousPeakSpectrum, _peakRiseTime, _peakFallTime, _frameDuration);
 
-            // This is temp hack. once visualizer passes in dimensions won't be necessary
-            float w = 0f, h = 0f;
-
-            lock (_sizeLock)
-            {
-                w = _visualizerWidth;
-                h = _visualizerHeight;
-            }
+            float w = (float)args.ViewExtent.Width;
+            float h = (float)args.ViewExtent.Height;
 
             // There are bugs in ConverToLogAmplitude. It is returning 0 if max is not 0 and min negative.
             // The heightScale is a workaround for this
-            var s = _previousSpectrum.ConvertToLogAmplitude(-50, 0);
-            var p = _previousPeakSpectrum.ConvertToLogAmplitude(-50, 0);
+            var s = _previousSpectrum.ConvertToDecibels(-50, 0);
+            var p = _previousPeakSpectrum.ConvertToDecibels(-50, 0);
             DrawSpectrumSpline(p[0], drawingSession, Vector2.Zero, w, h, -0.02f, Color.FromArgb(0xff, 0x38, 0x38, 0x38));
             DrawSpectrumSpline(p[1], drawingSession, Vector2.Zero, w, h, -0.02f, Color.FromArgb(0xff, 0x38, 0x38, 0x38), true);
             DrawSpectrumSpline(s[0], drawingSession, Vector2.Zero, w, h, -0.02f, Color.FromArgb(0xff, 0x30, 0x30, 0x30));
@@ -430,21 +424,5 @@ namespace BuildCast.Views
             CanvasGeometry geometry = CanvasGeometry.CreatePath(path);
             session.FillGeometry(geometry, color);
         }
-
-        private void Visualizer_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (double.IsNaN(visualizer.ActualWidth) || double.IsNaN(visualizer.ActualHeight))
-            {
-                return;
-            }
-
-            lock (_sizeLock)
-            {
-                _visualizerWidth = (float)visualizer.ActualWidth;
-                _visualizerHeight = (float)visualizer.ActualHeight;
-            }
-        }
-
-        
     }
 }
