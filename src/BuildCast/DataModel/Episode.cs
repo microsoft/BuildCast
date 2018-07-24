@@ -15,22 +15,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using BuildCast.Helpers;
 using Windows.Foundation.Collections;
-using System.Diagnostics;
 
 namespace BuildCast.DataModel
 {
     public class Episode
     {
         private string _uri;
-        private string _localFilename;
-        private string _title;
-        private string _description;
-        private string _subtitle;
-        private string _itemThumbnail;
         private Feed _feed;
-        private DateTimeOffset _publishDate;
-        private string _formattedPublishDate;
-        private TimeSpan _duration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Episode"/> class.
@@ -54,12 +45,12 @@ namespace BuildCast.DataModel
             this.Id = Guid.NewGuid();
             this.Key = key;
             this.LocalFileName = BackgroundDownloadHelper.SafeHashUri(new Uri(this.Key));
-            this._title = title;
-            this._description = description;
-            this._itemThumbnail = itemThumbnail;
+            this.Title = title;
+            this.Description = description;
+            this.ItemThumbnail = itemThumbnail;
 
-            this._publishDate = publishDate;
-            this._duration = duration;
+            this.PublishDate = publishDate;
+            this.Duration = duration;
             this.Subtitle = subtitle;
 
             if (feed != null)
@@ -89,10 +80,7 @@ namespace BuildCast.DataModel
 
         public string Key
         {
-            get
-            {
-                return _uri;
-            }
+            get => _uri;
 
             set
             {
@@ -106,52 +94,39 @@ namespace BuildCast.DataModel
             }
         }
 
-        public string LocalFileName { get => _localFilename; set => _localFilename = value; }
+        public string LocalFileName { get; set; }
 
-        public string Title { get => _title; set => _title = value; }
+        public string Title { get; set; }
 
-        public string Description { get => _description; set => _description = value; }
+        public string Description { get; set; }
 
-        public string ItemThumbnail { get => _itemThumbnail; set => _itemThumbnail = value; }
+        public string ItemThumbnail { get; set; }
 
         public bool IsDownloaded { get; set; }
 
-        public string FeedId
-        {
-            get; set;
-        }
+        public string FeedId { get; set; }
 
         [System.ComponentModel.DataAnnotations.Schema.NotMapped]
         public Feed Feed
         {
-            get
-            {
-                if (_feed == null)
-                {
-                    _feed = GetFeed();
-                }
-
-                return _feed;
-            }
-
+            get => _feed ?? GetFeed();
             set => _feed = value;
         }
 
-        public DateTimeOffset PublishDate { get => _publishDate; set => _publishDate = value; }
-        
-        public string FormatPublishDate (Episode e)
+        public DateTimeOffset PublishDate { get; set; }
+
+        public string FormatPublishDate(Episode e)
         {
             string formattedDate = e.PublishDate.Month.ToString() + "/" + e.PublishDate.Day.ToString() + "/" + e.PublishDate.Year.ToString();
             return formattedDate;
         }
 
-        public TimeSpan Duration { get => _duration; set => _duration = value; }
-
-        public string Subtitle { get => _subtitle; set => _subtitle = value; }
+        public TimeSpan Duration { get; set; }
+        public string Subtitle { get; set; }
 
         public override string ToString()
         {
-            return _title ?? string.Empty;
+            return Title ?? string.Empty;
         }
 
         public async Task SetDownloaded()
