@@ -1,6 +1,16 @@
+---
+topic: sample
+languages:
+- csharp
+products:
+- windows
+- uwp
+---
+
 <!---
   category: Fluent
 -->
+
 # BuildCast Video Player UWP Sample
 BuildCast is an end-to-end sample built to showcase the [Microsoft Fluent Design System](https://fluent.microsoft.com/) as well as other capabilities of the Universal Windows Platform. It permits browsing, downloading and playback of select video podcasts including a sampling of the most popular ones from Channel 9 as well as some popular Windows tech enthusiast feeds. It has other features such as ink notes, bookmarks and remote playback. This sample was initially shown and discussed at the 2017 Build conference during the [Build Amazing Apps with Fluent Design](https://channel9.msdn.com/Events/Build/2017/B8034) talk.  
 
