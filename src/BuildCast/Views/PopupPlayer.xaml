@@ -24,6 +24,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="theGrid">
         <Rectangle x:Name="gl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
         <Rectangle SizeChanged="PlayerHolder_SizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="playerHolder" Margin="0,0,0,0"></Rectangle>
-        <Button x:Name="btnexit" Click="Btnexit_LeaveCompactMode" VerticalAlignment="Bottom" HorizontalAlignment="Center">Exit</Button>
+        <Button x:Name="btnexit" Click="Btnexit_LeaveCompactMode" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0">Exit</Button>
     </Grid>
 </Page>
