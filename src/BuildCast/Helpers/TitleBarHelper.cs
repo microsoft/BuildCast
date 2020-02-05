@@ -10,9 +10,11 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
+using System;
 using System.ComponentModel;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace BuildCast.Helpers
 {
@@ -22,6 +24,7 @@ namespace BuildCast.Helpers
         private static CoreApplicationViewTitleBar _coreTitleBar;
         private Thickness _titlePosition;
         private Visibility _titleVisibility;
+        private int _extraPadding;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TitleBarHelper"/> class.
@@ -103,7 +106,22 @@ namespace BuildCast.Helpers
             // top position should be 6 pixels for a 32 pixel high titlebar hence scale by actual height
             var correctHeight = height / 32 * 6;
 
-            return new Thickness(leftPosition + 12, correctHeight, 0, 0);
+            return new Thickness(leftPosition + 12 + _extraPadding, correctHeight, 0, 0);
+        }
+
+        internal void NavDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        {
+            switch (args.DisplayMode)
+            {
+                case NavigationViewDisplayMode.Compact:
+                    _extraPadding = 50;
+                    break;
+                default:
+                    _extraPadding = 0;
+                    break;
+            }
+
+            TitlePosition = CalculateTilebarOffset(_coreTitleBar.SystemOverlayLeftInset, _coreTitleBar.Height);
         }
     }
 }
