@@ -119,8 +119,10 @@
                 ItemClick="NotesListView_Tapped"
                 IsItemClickEnabled="True"
                 SelectionMode="None"
+             CanDragItems="True"
             animations:Implicit.ShowAnimations="{StaticResource DefaultListShowAnimations}"
             animations:Implicit.HideAnimations="{StaticResource DefaultListHideAnimations}"
+            DragItemsStarting="notesListView_DragItemsStarting"
                 >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
