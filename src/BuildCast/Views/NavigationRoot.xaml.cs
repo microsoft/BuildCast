@@ -199,5 +199,10 @@ namespace BuildCast.Views
             return d.ToString("d");
         }
         #endregion
+
+        private void navview_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        {
+            TitleBarHelper.Instance.NavDisplayModeChanged(sender, args);
+        }
     }
 }

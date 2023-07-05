@@ -11,13 +11,11 @@
 // ******************************************************************
 
 using BuildCast.DataModel;
-using BuildCast.Helpers;
 using BuildCast.Services.Navigation;
 using BuildCast.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace BuildCast.Views
@@ -168,6 +166,28 @@ namespace BuildCast.Views
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             ReLoadNotes();
+        }
+
+        private async void notesListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            // Set the content of the DataPackage
+            if (e.Items.Count > 0)
+            {
+                var noteParameter = e.Items[0] as dynamic;
+
+                if (noteParameter != null)
+                {
+                    switch (noteParameter.Type)
+                    {
+                        case "Bookmark":
+                            e.Data.SetText($"{noteParameter.Time}\t{noteParameter.Episode}\t{noteParameter.NoteText}\n");
+                            break;
+                    }
+                }
+            }
+
+            // As we want our Reference list to say intact, we only allow Copy
+            e.Data.RequestedOperation = DataPackageOperation.Copy;
         }
     }
 }

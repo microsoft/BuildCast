@@ -31,7 +31,7 @@
                    Fill="{StaticResource NavigationViewDefaultPaneBackground}" 
                    HorizontalAlignment="Left" Height="1000" Width="48"/>
 
-        <RS3:NavigationView IsSettingsVisible="True" x:Name="navview" AlwaysShowHeader="False" ItemInvoked="Navview_ItemInvoked">
+        <RS3:NavigationView IsSettingsVisible="True" x:Name="navview" AlwaysShowHeader="False" ItemInvoked="Navview_ItemInvoked" DisplayModeChanged="navview_DisplayModeChanged">
             <RS3:NavigationView.MenuItems>
                 <RS3:NavigationViewItem Content="Browse videos" IsSelected="True">
                     <RS3:NavigationViewItem.Icon>
