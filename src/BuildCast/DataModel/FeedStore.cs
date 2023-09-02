@@ -63,7 +63,7 @@ namespace BuildCast.DataModel
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Download scan failed with error {ex.Message}");
-                    throw ex;
+                    throw;
                 }
             });
         }
