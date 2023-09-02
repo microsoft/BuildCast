@@ -148,6 +148,7 @@
             Background="{ThemeResource AppBarBackgroundThemeBrush}"
             BorderThickness="0,0,0,0"
             CloseButtonText="Cancel"
+            DefaultButton="Primary"
             PrimaryButtonCommand="{x:Bind AddBookmarkCommand}"
             PrimaryButtonText="Add bookmark">
             <ContentDialog.Content>
